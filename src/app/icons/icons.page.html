@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-button fill="clear" mode="ios" slot="start" (click)="goBack()">
+      <svg slot="start" class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </ion-button>
+    <ion-title class="page-title">Team Players</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Team Info Card -->
+    <div class="team-info-card">
+      <h3 class="team-info-title">{{ teamName }}</h3>
+      <p class="team-info-subtitle">Team Players Management</p>
+    </div>
+
+    <!-- Players List Card -->
+    <div class="list-card">
+      <div class="list-header">
+        <div class="col col-id">ID</div>
+        <div class="col col-player">Player</div>
+        <div class="col col-status">Status</div>
+      </div>
+
+      <div class="list-row" *ngFor="let p of players">
+        <div class="col col-id">{{ p.id }}</div>
+        <div class="col col-player">
+          <div class="avatar">
+            <img *ngIf="p.avatar; else emptyAvatar" [src]="p.avatar" alt="player avatar" />
+            <ng-template #emptyAvatar>
+              <div class="avatar-fallback">
+                <ion-icon name="help"></ion-icon>
+              </div>
+            </ng-template>
+          </div>
+          <div class="player-name">{{ p.name }}</div>
+        </div>
+        <div class="col col-status">
+          <div class="badge" [class.active]="p.active">
+            <ion-icon name="person-circle"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

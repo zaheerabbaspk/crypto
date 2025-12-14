@@ -1,0 +1,458 @@
+// Cricket Field Background
+.cricket-field-bg {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c59 50%, #2d5016 100%);
+  background-image: 
+    radial-gradient(circle at 30% 40%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 60%, rgba(139, 195, 74, 0.1) 0%, transparent 50%);
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+// Horizontal IPL Broadcast Scoreboard
+.horizontal-scoreboard {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  display: flex;
+  align-items: stretch;
+  z-index: 1000;
+  font-family: 'Arial Black', 'Helvetica', sans-serif;
+  box-shadow: 
+    0 -8px 30px rgba(0, 0, 0, 0.9),
+    0 -4px 15px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: perspective(1000px) rotateX(2deg);
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+}
+
+// Team Logo Left
+.team-logo-left {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.6),
+    inset 2px 0 6px rgba(255, 255, 255, 0.05),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(12px);
+  
+  img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+  }
+}
+
+// Team Info Section
+.team-info {
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6px;
+  color: white;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.6),
+    inset 2px 0 6px rgba(255, 255, 255, 0.05),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(10px);
+  
+  .team-name {
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      2px 2px 6px rgba(0, 0, 0, 0.9),
+      0 0 8px rgba(255, 255, 255, 0.2);
+    margin-bottom: 2px;
+  }
+  
+  .venue-info {
+    font-size: 8px;
+    font-weight: 600;
+    color: #999;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    margin-bottom: 1px;
+  }
+  
+  .hashtag {
+    font-size: 7px;
+    font-weight: 600;
+    color: #666;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  }
+}
+
+// Score Section
+.score-section {
+  width: 100px;
+  height: 60px;
+  background: linear-gradient(135deg, #0a0a0a, #2a2a2a, #0a0a0a);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  box-shadow: 
+    inset -3px 0 10px rgba(0, 0, 0, 0.7),
+    inset 3px 0 10px rgba(255, 255, 255, 0.08),
+    0 0 18px rgba(255, 255, 255, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.6);
+  transform: translateZ(18px);
+  
+  .main-score {
+    font-size: 24px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      3px 3px 10px rgba(0, 0, 0, 1),
+      0 0 12px rgba(255, 255, 255, 0.3),
+      1px 1px 0 rgba(0, 0, 0, 0.8);
+    margin-bottom: 2px;
+  }
+  
+  .overs {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ccc;
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.9),
+      0 0 6px rgba(255, 255, 255, 0.2);
+  }
+}
+
+// First Batsman
+.batsman-1 {
+  width: 90px;
+  height: 60px;
+  background: linear-gradient(135deg, #a01729, #c41e3a, #a01729);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6px;
+  color: white;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.4),
+    inset 2px 0 6px rgba(255, 255, 255, 0.15),
+    0 0 12px rgba(196, 30, 58, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(16px);
+  
+  .player-name {
+    font-size: 9px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.9),
+      0 0 6px rgba(255, 255, 255, 0.2);
+    margin-bottom: 1px;
+  }
+  
+  .stats {
+    display: flex;
+    gap: 4px;
+    align-items: baseline;
+    
+    .runs {
+      font-size: 16px;
+      font-weight: 900;
+      color: white;
+      text-shadow: 
+        2px 2px 6px rgba(0, 0, 0, 1),
+        0 0 10px rgba(255, 255, 255, 0.3),
+        1px 1px 0 rgba(0, 0, 0, 0.8);
+    }
+    
+    .balls {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 
+        1px 1px 3px rgba(0, 0, 0, 0.9),
+        0 0 5px rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+// Second Batsman
+.batsman-2 {
+  width: 90px;
+  height: 60px;
+  background: linear-gradient(135deg, #a01729, #c41e3a, #a01729);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 6px;
+  color: white;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.4),
+    inset 2px 0 6px rgba(255, 255, 255, 0.15),
+    0 0 12px rgba(196, 30, 58, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(16px);
+  
+  .player-name {
+    font-size: 9px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.9),
+      0 0 6px rgba(255, 255, 255, 0.2);
+    margin-bottom: 1px;
+  }
+  
+  .stats {
+    display: flex;
+    gap: 4px;
+    align-items: baseline;
+    
+    .runs {
+      font-size: 16px;
+      font-weight: 900;
+      color: white;
+      text-shadow: 
+        2px 2px 6px rgba(0, 0, 0, 1),
+        0 0 10px rgba(255, 255, 255, 0.3),
+        1px 1px 0 rgba(0, 0, 0, 0.8);
+    }
+    
+    .balls {
+      font-size: 10px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 
+        1px 1px 3px rgba(0, 0, 0, 0.9),
+        0 0 5px rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+// Toss Section
+.toss-section {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #e67e00, #ff8c00, #e67e00);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.3),
+    inset 2px 0 6px rgba(255, 255, 255, 0.2),
+    0 0 12px rgba(255, 140, 0, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(14px);
+  
+  .toss-label {
+    font-size: 8px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      2px 2px 4px rgba(0, 0, 0, 0.9),
+      0 0 6px rgba(255, 255, 255, 0.2);
+    margin-bottom: 1px;
+  }
+  
+  .toss-team {
+    font-size: 14px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 
+      2px 2px 6px rgba(0, 0, 0, 1),
+      0 0 10px rgba(255, 255, 255, 0.3);
+  }
+}
+
+// Bowler Section
+.bowler-section {
+  width: 80px;
+  height: 60px;
+  background: linear-gradient(135deg, #e6c200, #ffd700, #e6c200);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 5px;
+  color: #333;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.2),
+    inset 2px 0 6px rgba(255, 255, 255, 0.4),
+    0 0 12px rgba(255, 215, 0, 0.3),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(14px);
+  
+  .bowler-name {
+    font-size: 9px;
+    font-weight: 900;
+    color: #333;
+    text-shadow: 
+      1px 1px 2px rgba(255, 255, 255, 0.6),
+      0 0 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1px;
+  }
+  
+  .bowler-stats {
+    display: flex;
+    gap: 3px;
+    align-items: baseline;
+    
+    .figures {
+      font-size: 14px;
+      font-weight: 900;
+      color: #333;
+      text-shadow: 
+        2px 2px 4px rgba(255, 255, 255, 0.6),
+        0 0 6px rgba(0, 0, 0, 0.3),
+        1px 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    
+    .overs {
+      font-size: 10px;
+      font-weight: 700;
+      color: #555;
+      text-shadow: 
+        1px 1px 2px rgba(255, 255, 255, 0.6),
+        0 0 4px rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+// Ball Tracker
+.ball-tracker {
+  display: flex;
+  gap: 1px;
+  align-items: center;
+  height: 60px;
+  padding: 0 5px;
+  background: linear-gradient(135deg, #1a1a1a, #333, #1a1a1a);
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.6),
+    inset 2px 0 6px rgba(255, 255, 255, 0.05),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(8px);
+  
+  .ball {
+    width: 8px;
+    height: 8px;
+    background: linear-gradient(135deg, #e6c200, #ffd700, #e6c200);
+    border: 1px solid #333;
+    border-radius: 1px;
+    box-shadow: 
+      0 1px 4px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      0 0 6px rgba(255, 215, 0, 0.3);
+    transform: translateZ(2px);
+  }
+}
+
+// Team Logo Right
+.team-logo-right {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    inset -2px 0 6px rgba(0, 0, 0, 0.6),
+    inset 2px 0 6px rgba(255, 255, 255, 0.05),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  transform: translateZ(12px);
+  
+  img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+  }
+}
+
+// Bottom Accent Bar
+.bottom-accent-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, 
+    #ff6b35 0%, 
+    #f39c12 25%, 
+    #e74c3c 50%, 
+    #9b59b6 75%, 
+    #3498db 100%);
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+}
+
+// 3D Effects and Animations
+@keyframes scoreboardGlow {
+  0%, 100% {
+    box-shadow: 
+      0 -10px 40px rgba(0, 0, 0, 0.8),
+      0 -5px 20px rgba(255, 107, 53, 0.3),
+      inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 -15px 50px rgba(0, 0, 0, 0.9),
+      0 -8px 30px rgba(255, 107, 53, 0.5),
+      inset 0 2px 0 rgba(255, 255, 255, 0.15);
+  }
+}
+
+.ipl-scoreboard {
+  animation: scoreboardGlow 4s ease-in-out infinite;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .ipl-scoreboard-exact {
+    height: 70px;
+    
+    .left-team-logo,
+    .right-team-logo {
+      width: 60px;
+      
+      .team-emblem img,
+      img {
+        width: 35px;
+        height: 35px;
+      }
+    }
+    
+    .team-score-section {
+      width: 160px;
+      padding: 0 10px;
+      
+      .team-name {
+        font-size: 16px;
+      }
+      
+      .score-display {
+        .score,
+        .wickets {
+          font-size: 24px;
+        }
+      }
+    }
+    
+    .right-team-section .opponent-logo {
+      width: 45px;
+      height: 45px;
+      
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+}

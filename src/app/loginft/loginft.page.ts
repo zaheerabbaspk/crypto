@@ -1,0 +1,333 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonTitle, 
+  IonToolbar, 
+  IonButton, 
+  IonIcon,
+  IonItem,
+  IonList,
+  IonLabel,
+  IonInput,
+  IonSpinner,
+  IonToast,
+  Platform
+} from '@ionic/angular/standalone';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
+import { Router } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
+// Google API types
+declare var gapi: any;
+
+interface GoogleUser {
+  email: string;
+  familyName: string;
+  givenName: string;
+  id: string;
+  imageUrl: string;
+  name: string;
+}
+
+declare global {
+  interface Window {
+    gapi?: typeof gapi;
+    google?: {
+      accounts: {
+        oauth2: {
+          initTokenClient: (config: {
+            client_id: string;
+            scope: string;
+            callback: (response: {
+              access_token: string;
+              error?: string;
+              error_description?: string;
+            }) => void;
+            error_callback?: (error: any) => void;
+          }) => {
+            requestAccessToken: () => void;
+          };
+        };
+      };
+    };
+  }
+}
+
+@Component({
+  selector: 'app-loginft',
+  templateUrl: './loginft.page.html',
+  styleUrls: ['./loginft.page.scss'],
+  standalone: true,
+  imports: [
+    IonContent, 
+    IonHeader, 
+    IonTitle, 
+    IonToolbar, 
+    CommonModule, 
+    FormsModule,
+    IonButton,
+    IonIcon,
+    IonItem,
+    IonList,
+    IonLabel,
+    IonInput,
+    IonSpinner,
+    IonToast,
+    HttpClientModule
+  ]
+})
+export class LoginftPage implements OnInit {
+  userInfo: GoogleUser | null = null;
+  isLoading = false;
+  showError = false;
+  errorMessage = '';
+  isGoogleApiLoaded = false;
+
+  constructor(
+    private platform: Platform,
+    private router: Router,
+    private http: HttpClient
+  ) {
+    this.initializeApp();
+  }
+
+  async initializeApp() {
+    try {
+      await this.platform.ready();
+      
+      // Initialize Google Auth for Capacitor
+      await GoogleAuth.initialize({
+        clientId: environment.google.clientId,
+        scopes: environment.google.scopes,
+        grantOfflineAccess: true,
+      });
+
+      // Load Google API for web
+      if (!this.platform.is('capacitor')) {
+        await this.loadGoogleApi();
+      }
+    } catch (error) {
+      console.error('Error initializing Google Auth:', error);
+      this.showError = true;
+      this.errorMessage = 'Failed to initialize authentication service';
+    }
+  }
+
+  private loadGoogleApi(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (window.google) {
+        this.isGoogleApiLoaded = true;
+        resolve();
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        console.log('Google API loaded');
+        this.isGoogleApiLoaded = true;
+        resolve();
+      };
+      script.onerror = (error) => {
+        console.error('Failed to load Google API:', error);
+        this.errorMessage = 'Failed to load Google Sign-In. Please try again later.';
+        this.showError = true;
+        reject(new Error('Failed to load Google Sign-In'));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  async ngOnInit() {
+    await this.checkAuthState();
+  }
+
+  async googleSignIn() {
+    if (this.isLoading) return;
+    
+    this.isLoading = true;
+    this.showError = false;
+    this.errorMessage = '';
+
+    try {
+      if (this.platform.is('capacitor')) {
+        // Mobile flow with Capacitor
+        const googleUser = await GoogleAuth.signIn();
+        await this.handleSignInSuccess(googleUser);
+      } else {
+        // Web flow with Google Identity Services
+        if (!this.isGoogleApiLoaded) {
+          await this.loadGoogleApi();
+        }
+        await this.googleSignInWeb();
+      }
+    } catch (error: any) {
+      this.handleSignInError(error);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private googleSignInWeb(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (!window.google) {
+        this.showError = true;
+        this.errorMessage = 'Google API not loaded. Please refresh the page and try again.';
+        reject(new Error('Google API not loaded'));
+        return;
+      }
+
+      try {
+        const client = window.google.accounts.oauth2.initTokenClient({
+          client_id: environment.google.clientId,
+          scope: environment.google.scopes.join(' '),
+          callback: async (response: any) => {
+            if (response.error) {
+              this.showError = true;
+              this.errorMessage = this.getFriendlyErrorMessage(response.error);
+              reject(new Error(response.error_description || 'Google sign-in failed'));
+              return;
+            }
+            try {
+              const userInfo = await this.getUserInfo(response.access_token);
+              await this.handleSignInSuccess({
+                email: userInfo.email,
+                familyName: userInfo.family_name,
+                givenName: userInfo.given_name,
+                id: userInfo.sub,
+                imageUrl: userInfo.picture,
+                name: userInfo.name
+              });
+              resolve();
+            } catch (error: any) {
+              this.showError = true;
+              this.errorMessage = this.getFriendlyErrorMessage(error.message);
+              reject(error);
+            }
+          },
+          error_callback: (error: any) => {
+            this.showError = true;
+            this.errorMessage = this.getFriendlyErrorMessage(
+              error.error === 'popup_closed' ? 'popup_closed_by_user' : error.message
+            );
+            reject(new Error(error.message || 'Google sign-in failed'));
+          }
+        });
+
+        client.requestAccessToken();
+      } catch (error: any) {
+        this.showError = true;
+        this.errorMessage = 'An unexpected error occurred during sign-in. Please try again.';
+        console.error('Google Sign-In initialization error:', error);
+        reject(error);
+      }
+    });
+  }
+
+  private getFriendlyErrorMessage(error: string): string {
+    const errorMessages: { [key: string]: string } = {
+      'popup_closed_by_user': 'Sign in was cancelled. Please try again.',
+      'access_denied': 'Sign in was denied. Please try again or use another account.',
+      'idpiframe_initialization_failed': 'Could not connect to Google. Please check your internet connection.',
+      'immediate_failed': 'Could not sign in automatically. Please try the sign-in button again.'
+    };
+
+    return errorMessages[error] || 'An error occurred during sign-in. Please try again.';
+  }
+
+  private async checkAuthState() {
+    try {
+      // For Capacitor, we'll just set userInfo to null initially
+      // and let the sign-in flow handle the rest
+      if (this.platform.is('capacitor')) {
+        this.userInfo = null;
+      }
+      // For web, we'll rely on the Google API being loaded
+      // and the user being signed in through the standard flow
+    } catch (error) {
+      console.error('Error checking auth state:', error);
+      this.userInfo = null;
+    }
+  }
+
+  private handleSignInError(error: any) {
+    console.error('Sign in error:', error);
+    
+    // Show a more user-friendly error message
+    this.showError = true;
+    
+    if (error.error === 'popup_closed_by_user' || 
+        error.message?.includes('popup_closed') ||
+        error.message?.includes('User closed the popup')) {
+      this.errorMessage = 'Sign in was cancelled. Please try again if you want to continue.';
+    } else if (error.message?.includes('idpiframe_initialization_failed')) {
+      this.errorMessage = 'Could not connect to Google. Please check your internet connection and try again.';
+    } else if (error.message?.includes('access_denied')) {
+      this.errorMessage = 'Sign in was denied. Please try again or use another account.';
+    } else {
+      this.errorMessage = 'An error occurred during sign-in. Please try again later.';
+    }
+  }
+
+  private async handleSignInSuccess(userData: GoogleUser) {
+    console.log('Sign in successful', userData);
+    this.userInfo = userData;
+    
+    try {
+      // Store user data in your preferred way (e.g., service, storage)
+      // await Storage.set({ key: 'user', value: JSON.stringify(userData) });
+      
+      // Navigate directly to twopage
+      this.router.navigate(['/twopage'], { 
+        state: { userData: userData }
+      });
+      
+    } catch (error) {
+      console.error('Error after sign in:', error);
+      // Fallback to twopage even if there's an error
+      this.router.navigate(['/twopage']);
+    }
+  }
+
+  private async checkIfNewUser(userData: GoogleUser): Promise<boolean> {
+    // Implement your logic to check if the user is new
+    // For example, you might check your database or local storage
+    // This is a placeholder - replace with your actual implementation
+    return false; // Default to false - change based on your logic
+  }
+
+  private async getUserInfo(accessToken: string): Promise<any> {
+    const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch user info');
+    }
+    
+    return await response.json();
+  }
+
+  async signOut() {
+    try {
+      await GoogleAuth.signOut();
+      this.userInfo = null;
+      // Clear any stored user data
+      // await Storage.remove({ key: 'user' });
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  }
+
+  // Handle email/password login form submission
+  onLogin() {
+    // Your email/password login logic here
+    this.router.navigate(['/home']);
+  }
+}

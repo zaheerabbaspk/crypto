@@ -1,0 +1,223 @@
+/* Page Header */
+.page-header {
+  --background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.page-title {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Page Content */
+.page-content {
+  --background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.page-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Innings Info */
+.innings-info {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.innings-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 0 16px 0;
+}
+
+.change-inning-btn {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.25);
+}
+
+.change-inning-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 152, 0, 0.35);
+}
+
+.change-inning-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Form Card */
+.form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+}
+
+/* Field Label */
+.field-label {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Input Field */
+.input-field {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #e8e8e8;
+  transition: all 0.3s ease;
+}
+
+.input-field.green {
+  border-color: #4caf50;
+}
+
+.input-field.green:focus-within {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+}
+
+.input-field.blue {
+  border-color: #2196f3;
+}
+
+.input-field.blue:focus-within {
+  border-color: #1565c0;
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+}
+
+/* Text Input */
+.text-input {
+  --background: white;
+  --padding-start: 15px;
+  --padding-end: 15px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.text-input::placeholder {
+  color: #999;
+}
+
+/* Start Button */
+.start-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+  margin-top: 24px;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.35);
+}
+
+.start-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 16px 12px;
+  }
+
+  .form-card {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .field-label {
+    font-size: 13px;
+  }
+
+  .text-input {
+    font-size: 14px;
+  }
+
+  .start-btn {
+    padding: 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding: 12px;
+  }
+
+  .innings-title {
+    font-size: 20px;
+  }
+
+  .form-card {
+    padding: 14px;
+    margin-bottom: 16px;
+  }
+
+  .field-label {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .text-input {
+    font-size: 14px;
+  }
+
+  .start-btn {
+    padding: 12px;
+    font-size: 13px;
+    gap: 6px;
+  }
+
+  .start-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

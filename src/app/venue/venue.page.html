@@ -1,0 +1,118 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Match Setup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">🏟️</div>
+      <h2 class="hero-title">Configure Your Match</h2>
+      <p class="hero-subtitle">Set up venue, date, time, and match parameters</p>
+    </div>
+
+    <!-- Form Card -->
+    <div class="form-card">
+      
+      <!-- Venue Section -->
+      <div class="form-section">
+        <h3 class="section-title">Venue Details</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Venue/Ground</label>
+          <input type="text" class="form-input" placeholder="Enter venue name" [(ngModel)]="venue" />
+          <p class="helper-text">Start typing to find a venue</p>
+        </div>
+
+        <button class="secondary-btn">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+          Add New Venue
+        </button>
+      </div>
+
+      <!-- Date & Time Section -->
+      <div class="form-section">
+        <h3 class="section-title">Match Date & Time</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-input" [(ngModel)]="matchDate" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Time</label>
+            <input type="time" class="form-input" [(ngModel)]="matchTime" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Ball Type Section -->
+      <div class="form-section">
+        <h3 class="section-title">Ball Type</h3>
+        
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="ballType" value="leather" [(ngModel)]="ballType" />
+            <span class="radio-label">Leather</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="ballType" value="tennis" [(ngModel)]="ballType" />
+            <span class="radio-label">Tennis</span>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="ballType" value="other" [(ngModel)]="ballType" />
+            <span class="radio-label">Other</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Match Parameters Section -->
+      <div class="form-section">
+        <h3 class="section-title">Match Parameters</h3>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Number of Overs</label>
+            <input type="number" class="form-input" placeholder="20" [(ngModel)]="numberOfOvers" (ngModelChange)="onOversChange($event)" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bowler's Over Limit</label>
+            <input type="number" class="form-input" placeholder="4" [(ngModel)]="bowlerOverLimit" (ngModelChange)="onLimitChange($event)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Scorer Email Section -->
+      <div class="form-section">
+        <h3 class="section-title">Additional Information</h3>
+        
+        <div class="form-group">
+          <label class="form-label">Scorer Email ID (Optional)</label>
+          <input type="email" class="form-input" placeholder="scorer@example.com" [(ngModel)]="scorerEmail" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="action-btn back-btn" (click)="goBack()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Go Back
+      </button>
+      <button class="action-btn create-btn" (click)="createMatch()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Create Match
+      </button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Scoresheet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">📋</div>
+      <h1 class="hero-title">Team Squads</h1>
+      <p class="hero-subtitle">Review and update team compositions before scoring</p>
+    </div>
+
+    <!-- Team Messages Card -->
+    <div class="messages-card">
+      <div class="card-header">
+        <h3 class="card-title">Team Status</h3>
+      </div>
+      <div class="card-content">
+        <div class="message-item warning">
+          <div class="message-icon">⚠️</div>
+          <div class="message-text">
+            <p class="message-title">{{team1Name}}</p>
+            <p class="message-desc">No substitutes found</p>
+          </div>
+        </div>
+
+        <div class="message-item warning">
+          <div class="message-icon">⚠️</div>
+          <div class="message-text">
+            <p class="message-title">{{team2Name}}</p>
+            <p class="message-desc">No substitutes found</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instruction Card -->
+    <div class="instruction-card">
+      <div class="instruction-icon">ℹ️</div>
+      <h3 class="instruction-title">Next Steps</h3>
+      <p class="instruction-text">
+        Press "Next" to update team squads or proceed directly to start scoring
+      </p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="action-btn next-btn" (click)="onNext()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+        Next
+      </button>
+      
+      <button class="action-btn exit-btn" (click)="onExit()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 6 13 16"/>
+          <polyline points="23 16 13 6"/>
+        </svg>
+        Exit
+      </button>
+    </div>
+  </div>
+</ion-content>

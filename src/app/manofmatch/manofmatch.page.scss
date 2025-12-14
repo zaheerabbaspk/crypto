@@ -1,0 +1,25 @@
+ion-content {
+  --background: #f5f5f5;
+}
+
+.player-item {
+  transition: all 0.3s ease;
+}
+
+.player-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.mvp-highlight {
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  color: #333;
+}
+
+.team-button {
+  transition: all 0.3s ease;
+}
+
+.team-button:hover {
+  transform: translateY(-2px);
+}

@@ -1,0 +1,267 @@
+.icc-bg {
+    --background: transparent;
+    background: transparent;
+  }
+
+  /* Brand palette approximated to screenshot */
+  :root {
+    --ind-blue-dk: #083b92;         /* deep team blue (IND tag) */
+    --ind-blue-mid: #1e56d2;        /* gradient top */
+    --score-blue: #083b92;          /* score background */
+    --purple-top: #6f28d4;          /* ticker gradient top */
+    --purple-btm: #4b1fa0;          /* ticker gradient bottom */
+    --target-bg: #ffffff;           /* white pill */
+    --target-edge: #cfd5ea;         /* thin border */
+    --text-on-purple: #f6edff;
+    --text-on-blue: #ffffff;
+    --label-dark: #1b2445;
+    --group-sep: rgba(0,0,0,.25);
+  }
+  
+  .icc-plate {
+    position: fixed;
+    left: 12px; right: 12px; bottom: 16px;
+    margin: 0 auto; max-width: 980px;
+    background: #ffffff;
+    border-radius: 32px;
+    display: grid;
+    grid-template-columns: 320px 1fr 220px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+    box-shadow: 0 16px 26px rgba(0,0,0,.35);
+    outline: 1px solid rgba(0,0,0,.06);
+    /* entrance animation */
+    transform: translateY(120%);
+    animation: icc-slide-up 600ms cubic-bezier(.2,.8,.2,1) 120ms forwards;
+  }
+  
+  /* Left */
+  .left-section {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .team-flag img {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff, #ddd);
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    border: 3px solid #fff;
+  }
+  .batters .b {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: baseline;
+    gap: 8px;
+    color: #1b1b1b;
+    font-weight: 800;
+  }
+  .batters .b .name { color: #0d3e81; font-weight: 900; letter-spacing: .4px; }
+  .b .rb { color: #111; font-weight: 900; }
+  .b .balls { color: #666; font-size: 12px; }
+  
+  /* Center */
+  .center-section { display: grid; gap: 6px; }
+  .ticker {
+    background: #163a7b;
+    color: #e7f0ff;
+    text-align: center;
+    border-radius: 14px;
+    padding: 4px 10px;
+    font-weight: 900;
+    letter-spacing: .3px;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,.15), 0 3px 8px rgba(0,0,0,.25);
+    text-transform: uppercase;
+    overflow: hidden;
+    position: relative;
+  }
+  .ticker .ticker-track {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: icc-marquee 14s linear infinite;
+  }
+  .score-strip {
+    display: grid;
+    grid-template-columns: 56px 1fr auto 1fr 56px;
+    align-items: center;
+    background: linear-gradient(180deg,#eaf0fb,#dfe7f6);
+    border-radius: 20px;
+    padding: 6px 12px;
+    box-shadow: inset 0 2px 4px rgba(255,255,255,.25);
+  }
+  .team-short, .team-right {
+    background: #0d3e81; color: #fff;
+    border-radius: 12px;
+    padding: 4px 0; font-weight: 900; width: 52px;
+    text-align: center;
+  }
+  .mid-score {
+    color: #0a0a0a; font-weight: 900; text-align: center; font-size: 20px;
+  }
+  .over-pill {
+    background: #ffffff; color: #0e6f35; font-weight: 900;
+    border: 2px solid #25b857; border-radius: 12px; padding: 2px 8px; min-width: 48px; text-align: center;
+  }
+  .bowler { color: #333; text-align: center; font-weight: 800; font-size: 14px; }
+  
+  /* Right */
+  .right-section {
+    display: grid; grid-template-columns: 64px 1fr; align-items: center; gap: 12px;
+  }
+  .right-section .team-flag img {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #fff, #ddd);
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    border: 3px solid #fff;
+  }
+  .right-section .score {
+    color: #0d3e81; font-weight: 900; font-size: 18px; text-align: left;
+  }
+  
+  /* Rounded pill ends mimic ICC */
+  .icc-plate::before, .icc-plate::after {
+    content: '';
+    position: absolute; top: 0; bottom: 0;
+    width: 26px; border-radius: 18px;
+    background: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,.06);
+  }
+  .icc-plate::before { left: -14px; }
+  .icc-plate::after { right: -14px; }
+  
+  @media (max-width: 720px) {
+    .icc-plate { grid-template-columns: 1fr; row-gap: 8px; }
+    .right-section, .left-section { grid-template-columns: 48px 1fr; }
+    .team-flag img, .right-section .team-flag img { width: 48px; height: 48px; }
+  }
+  /* refine left batters to two-line with right-aligned stats */
+.batters {
+    display: grid;
+    row-gap: 2px;
+  }
+  .batters .b {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .batters .b .name { color: #0d3e81; font-weight: 900; letter-spacing: .4px; }
+  .batters .b .stats { color: #111; font-weight: 900; }
+  .batters .b .stats .balls { color: #666; font-size: 12px; margin-left: 4px; }
+  
+  /* center strip: insert red ball dot between score and over */
+  .score-strip {
+    grid-template-columns: 56px 1fr 14px auto 1fr 56px;
+  }
+  .score-strip .ball-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #c91b1b; box-shadow: 0 0 0 2px #fff inset, 0 1px 2px rgba(0,0,0,.25);
+    justify-self: center;
+    animation: icc-pulse 1.8s ease-in-out infinite;
+  }
+
+  /* Keyframes */
+  @keyframes icc-slide-up {
+    0% { transform: translateY(120%); opacity: .0; }
+    60% { transform: translateY(-6px); opacity: 1; }
+    100% { transform: translateY(0); }
+  }
+  @keyframes icc-marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  @keyframes icc-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 2px #fff inset, 0 1px 2px rgba(0,0,0,.25); }
+    50% { transform: scale(1.25); box-shadow: 0 0 12px rgba(201,27,27,.6) inset, 0 0 12px rgba(201,27,27,.6); }
+  }
+
+  /* =============================
+   * Broadcast lower-third (as pic)
+   * ============================= */
+  .broadcast-wrap {
+    position: fixed;
+    left: 10px; right: 10px; bottom: 12px;
+    z-index: 20;
+    background: blueviolet !important;
+  }
+  .broadcast-wrap .broadcast-bar {
+    display: grid;
+    align-items: stretch;
+    width: calc(100% - 12px);
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 24px rgba(0,0,0,.35);
+    transform: translateY(120%);
+    animation: icc-slide-up 500ms cubic-bezier(.2,.8,.2,1) 80ms forwards;
+    /* fixed segment widths to match broadcast proportions */
+    background: linear-gradient(180deg, var(--purple-top), var(--purple-btm)) !important;
+  
+    grid-template-columns:
+      56px   /* team tag */
+      108px  /* big score */
+      64px   /* over pill + ball */
+      76px   /* target pill */
+      1.1fr  /* batter 1 */
+      2px    /* divider */
+      1fr    /* batter 2 */
+      148px  /* bowler */
+      34px;  /* flag */
+  }
+
+  /* Left blue block: team code */
+  .seg { display: grid; place-items: center; padding: 5px 12px; min-height: 34px; }
+  .seg-team {
+    background: linear-gradient(180deg, var(--ind-blue-mid), var(--ind-blue-dk));
+    box-shadow: inset 0 -2px 0 rgba(255,212,41,.4);
+  }
+  .seg-team .team-code {
+    color: var(--text-on-blue); font-weight: 900; letter-spacing: .6px; min-width: 48px; text-align: center;
+  }
+
+  /* Big score on same deep blue */
+  .seg-score {
+    background: linear-gradient(180deg, var(--ind-blue-mid), var(--score-blue));
+    color: #ffd429; /* yellow digits like feed */
+    font-weight: 900; font-size: 23px; padding: 5px 12px;
+    border-right: 1px solid rgba(255,255,255,.18);
+    box-shadow: inset 0 -2px 0 rgba(255,212,41,.25);
+  }
+
+  /* Over pill on blue but lighter inner pill */
+  .seg-over { background: linear-gradient(180deg, var(--ind-blue-mid), var(--ind-blue-dk)); gap: 8px; grid-auto-flow: column; grid-auto-columns: max-content; grid-template-columns: max-content max-content; padding-right: 12px; }
+  .seg-over .ball-dot { width: 10px; height: 10px; border-radius: 50%; background: #d01f1f; box-shadow: 0 0 0 2px #fff inset, 0 1px 2px rgba(0,0,0,.25); animation: icc-pulse 1.8s ease-in-out infinite; }
+  .seg-over .over {
+    background: var(--ind-blue-dk); color: #ffffff; font-weight: 900; border-radius: 8px; padding: 2px 10px; min-width: 40px; text-align: center; box-shadow: inset 0 -1px 0 rgba(255,255,255,.12);
+  }
+
+  /* Target pill (white) */
+  .seg-target { background: #eef2fb; display: grid; grid-template-rows: auto auto; align-content: center; padding: 2px 10px; }
+  .seg-target .label { background: var(--target-bg); border: 1px solid var(--target-edge); color: var(--label-dark); border-radius: 6px; padding: 0 8px; font-weight: 800; font-size: 10px; line-height: 16px; }
+  .seg-target .value { color: var(--ind-blue-dk); font-weight: 900; font-size: 14px; line-height: 16px; }
+
+  /* Purple ticker for batters */
+  .divider { width: 1px; background: rgba(255,255,255,.35); }
+  .seg-batter {
+    background: linear-gradient(180deg, var(--purple-top), var(--purple-btm));
+    color: var(--text-on-purple); display: grid; grid-template-columns: auto auto auto; gap: 8px; padding: 6px 12px; align-items: baseline;
+  }
+  .seg-batter .name { font-weight: 800; letter-spacing: .3px; text-transform: uppercase; font-size: 13px; }
+  .seg-batter .runs { font-weight: 900; font-size: 14px; }
+  .seg-batter .balls { font-size: 11px; opacity: .95; vertical-align: super; line-height: 1; }
+
+  /* Bowler area on purple */
+  .seg-bowler { background: linear-gradient(180deg, var(--purple-top), var(--purple-btm)); color: var(--text-on-purple); display: grid; grid-auto-flow: column; grid-auto-columns: max-content; gap: 10px; padding: 6px 12px; justify-content: center; }
+  .seg-bowler .name { font-weight: 900; }
+  .seg-bowler .figures { opacity: .9; font-weight: 700; }
+  .seg-flag { background: linear-gradient(180deg, var(--purple-top), var(--purple-btm)); padding: 0 10px; }
+  .seg-flag img { width: 22px; height: 14px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255,255,255,.35); }
+
+  /* Responsive squeeze */
+  @media (max-width: 720px) {
+    .seg-score { font-size: 18px; padding: 6px 12px; }
+    .seg-batter .name { max-width: 92px; overflow: hidden; text-overflow: ellipsis; }
+    .seg-batter { gap: 6px; padding: 6px 8px; }
+    .seg-bowler { padding: 6px 10px; }
+  }

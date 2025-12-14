@@ -1,0 +1,54 @@
+<ion-content class="login-page">
+
+  Top bar
+  <div class="top-header">
+    <div class="status-time">11:27 <ion-icon name="person-outline"></ion-icon></div>
+  </div>
+
+  <div class="menu-banner">
+    <ion-menu-button auto-hide="false" class="menu-btn"></ion-menu-button>
+    <img src="assets/banner.png" alt="Banner" class="banner-img" />
+  </div>
+
+  <ion-list lines="none" class="login-box">
+    <div class="profile-wrap">
+      <img src="assets/profile.png" alt="Profile" class="profile-img" />
+    </div>
+
+    <p class="title-text">
+      <span class="blue-text">Admin ID Login</span>
+      If you do not have ID Yet! Press SignUp button to create a new ID.
+    </p>
+
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked" class="input-label">Email address</ion-label>
+      <ion-input placeholder="Enter email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="input-item">
+      <ion-label position="stacked" class="input-label">Password</ion-label>
+      <ion-input type="password" placeholder="Password"></ion-input>
+    </ion-item>
+
+    <div class="forgot-wrap">
+      <a href="#" class="forgot-text">Forgot Password?</a>
+    </div>
+  </ion-list>
+
+  <div class="btn-container">
+    <div class="btn-row">
+      <ion-button class="btn-green" (click)="onLogin()">Login</ion-button>
+      <ion-button class="btn-orange">Sign up</ion-button>
+      <ion-button class="btn-google" (click)="loginWithGoogle()">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Login with Google
+      </ion-button>
+      <ion-button class="btn-red">Exit</ion-button>
+    </div>
+  </div>
+
+  <div class="footer-logo">
+    <img src="assets/cricketsasa.png" alt="Logo" />
+  </div>
+
+</ion-content>

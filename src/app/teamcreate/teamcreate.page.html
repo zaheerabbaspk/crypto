@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Teams</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">👥</div>
+      <h2 class="hero-title">Manage Your Teams</h2>
+      <p class="hero-subtitle">Create and manage cricket teams for your matches</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="action-btn create-btn" (click)="createTeam()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Create New Team
+      </button>
+      <button class="action-btn back-btn" (click)="goBack()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Go Back
+      </button>
+    </div>
+
+    <!-- Teams Section -->
+    <div class="teams-section">
+      <div class="section-header">
+        <h3 class="section-title">Your Teams</h3>
+        <p class="section-subtitle">{{ teams.length }} team(s) available</p>
+      </div>
+
+      <!-- Empty State -->
+      <div *ngIf="teams.length === 0" class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3 class="empty-title">No Teams Yet</h3>
+        <p class="empty-text">Create your first team to get started</p>
+      </div>
+
+      <!-- Teams List -->
+      <div *ngIf="teams.length > 0" class="teams-list">
+        <div *ngFor="let team of teams; let i = index" class="team-card" (click)="goto()">
+          <div class="team-header">
+            <div class="team-avatar">
+              <img src="assets/icon/favicon.png" alt="Team Avatar" />
+            </div>
+            <div class="team-info">
+              <h4 class="team-name">{{ team.name }}</h4>
+              <p class="team-id">ID: {{ team.id }}</p>
+            </div>
+            <button class="delete-btn" (click)="deleteTeam(i); $event.stopPropagation();" title="Delete team">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </button>
+          </div>
+          <div class="team-footer">
+            <span class="team-badge">Tap to manage</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

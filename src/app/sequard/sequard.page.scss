@@ -1,0 +1,510 @@
+/* Page Header */
+.page-header {
+  --background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.page-title {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Page Content */
+.page-content {
+  --background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.page-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 32px 24px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hero-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+  display: block;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.hero-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 28px;
+  margin: 0 0 8px 0;
+}
+
+.hero-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Innings Info */
+.innings-info {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f0f0f0;
+  text-align: center;
+}
+
+.innings-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 0 16px 0;
+}
+
+.change-inning-btn {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.25);
+}
+
+.change-inning-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 152, 0, 0.35);
+}
+
+.change-inning-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 6 Column Grid */
+.grid-6col {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Players Grid - Legacy */
+.players-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Player Card */
+.player-card {
+  background: white;
+  border: 2px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.player-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.striker-card:hover {
+  border-color: #2e7d32;
+}
+
+.striker-card:hover::before {
+  background: rgba(46, 125, 50, 0.05);
+}
+
+.non-striker-card:hover {
+  border-color: #1976d2;
+}
+
+.non-striker-card:hover::before {
+  background: rgba(25, 118, 210, 0.05);
+}
+
+.bowler-card:hover {
+  border-color: #ff9800;
+}
+
+.bowler-card:hover::before {
+  background: rgba(255, 152, 0, 0.05);
+}
+
+/* Player Badge */
+.player-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+.bowler-badge {
+  background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+/* Player Avatar */
+.player-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-icon {
+  font-size: 48px;
+}
+
+/* Player Name */
+.player-name {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0 0 4px 0;
+}
+
+/* Player Role */
+.player-role {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* VS Section */
+.vs-section {
+  margin: 32px 0;
+  text-align: center;
+}
+
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.vs-divider::before,
+.vs-divider::after {
+  content: '';
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ddd, transparent);
+}
+
+.vs-text {
+  color: #ff9800;
+  font-weight: 700;
+  font-size: 20px;
+  padding: 0 16px;
+  text-align: center;
+  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bowling-team {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Bowler Grid */
+.bowler-grid {
+  margin-bottom: 32px;
+}
+
+/* Bowler Wrapper - Centered */
+.bowler-wrapper {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  grid-column: 3 / 4;
+}
+
+/* VS Section Inline (with Bowler) */
+.vs-section-inline {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.vs-divider-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.vs-divider-inline::before,
+.vs-divider-inline::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #ddd, transparent);
+}
+
+.bowling-team-inline {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 18px;
+  margin: 0;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+/* Bowler Container - Legacy */
+.bowler-container {
+  margin-bottom: 32px;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Start Button */
+.start-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+  margin-top: 24px;
+}
+
+.start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.35);
+}
+
+.start-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Modal Styles */
+.modal-header {
+  --background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-title {
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.modal-close {
+  --color: white;
+}
+
+.modal-content {
+  --background: #f8f9fa;
+}
+
+.modal-wrapper {
+  padding: 24px 16px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+/* Players List */
+.players-list {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.player-item {
+  --background: transparent;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.player-item:hover {
+  --background: #f8f9fa;
+}
+
+.player-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 4px 0;
+}
+
+.item-desc {
+  color: #999;
+  font-size: 12px;
+  margin: 0;
+}
+
+.item-arrow {
+  color: #1976d2;
+  font-size: 24px;
+  font-weight: 300;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .grid-6col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 16px 12px;
+  }
+
+  .grid-6col {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .players-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .bowler-container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding: 12px;
+  }
+
+  .hero-section {
+    padding: 20px 16px;
+    margin-bottom: 24px;
+  }
+
+  .hero-icon {
+    font-size: 48px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 12px;
+  }
+
+  .innings-title {
+    font-size: 20px;
+  }
+
+  .vs-divider-inline {
+    width: 100%;
+  }
+
+  .vs-text {
+    display: block;
+    text-align: center;
+  }
+
+  .bowling-team-inline {
+    display: block;
+    text-align: center;
+    width: 100%;
+  }
+
+  .player-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .avatar-icon {
+    font-size: 40px;
+  }
+
+  .player-name {
+    font-size: 14px;
+  }
+
+  .start-btn {
+    padding: 14px;
+    font-size: 14px;
+  }
+}

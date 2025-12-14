@@ -1,0 +1,173 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Match Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">⚙️</div>
+      <h2 class="hero-title">Configure Your Match</h2>
+      <p class="hero-subtitle">Manage inning settings, overlays, and match parameters</p>
+    </div>
+
+    <!-- Inning Management Card -->
+    <div class="settings-card">
+      <div class="card-header">
+        <h3 class="card-title">Inning Management</h3>
+        <p class="card-description">Control inning flow and match settings</p>
+      </div>
+      <div class="card-content">
+        <div class="settings-grid">
+          <button class="setting-item flip-item" (click)="changeFlipInning()">
+            <div class="item-icon flip-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 4v6h6M23 20v-6h-6"/>
+                <path d="M20.49 9a9 9 0 00-14.85-3.36L1 10M3.51 15a9 9 0 0014.85 3.36l4.64-4.36"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4 class="item-title">Flip Inning</h4>
+              <p class="item-desc">Switch between innings</p>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <button class="setting-item config-item" (click)="openInningSettings()">
+            <div class="item-icon config-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m5.08 5.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m5.08-5.08l4.24-4.24"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4 class="item-title">Overs & Limits</h4>
+              <p class="item-desc">Configure overs and bowler limits</p>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <button class="setting-item close-item" (click)="closeInnings()">
+            <div class="item-icon close-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4 class="item-title">Close Innings</h4>
+              <p class="item-desc">End current innings</p>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <button class="setting-item dls-item" (click)="closeWithDLS()">
+            <div class="item-icon dls-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 12a9 9 0 0118 0"/>
+                <path d="M12 7v5l3 2"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4 class="item-title">DLS Method</h4>
+              <p class="item-desc">Close with DLS calculation</p>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <button class="setting-item insight-item" (click)="openInsightCollector()" style="grid-column: 1 / -1;">
+            <div class="item-icon insight-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 21H3V3h9V1H3a2 2 0 00-2 2v18a2 2 0 002 2h18a2 2 0 002-2v-9h-2v9z"/>
+                <rect x="1" y="10" width="22" height="2"/>
+                <path d="M16 5l5-5m0 0l-5 5m5-5v5"/>
+              </svg>
+            </div>
+            <div class="item-content">
+              <h4 class="item-title">Match Insights</h4>
+              <p class="item-desc">Collect and view match analytics</p>
+            </div>
+            <svg class="item-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Display Settings Card -->
+    <div class="settings-card">
+      <div class="card-header">
+        <h3 class="card-title">Display Settings</h3>
+        <p class="card-description">Customize your viewing experience</p>
+      </div>
+      <div class="card-content">
+        <div class="toggle-item">
+          <div class="toggle-info">
+            <h4 class="toggle-title">Overlay Animations</h4>
+            <p class="toggle-desc">Enable smooth animations on overlay displays</p>
+          </div>
+          <div class="toggle-control">
+            <span class="toggle-label" [class.active]="!overlayManual">Auto</span>
+            <ion-toggle [(ngModel)]="overlayManual" class="custom-toggle"></ion-toggle>
+            <span class="toggle-label" [class.active]="overlayManual">Manual</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+      <button class="back-btn" (click)="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Go Back
+      </button>
+    </div>
+  </div>
+
+  <!-- Inning Settings Modal -->
+  <ion-modal [isOpen]="isInningSettingsOpen" (didDismiss)="closeInningSettings()">
+    <ng-template>
+      <ion-header [translucent]="true">
+        <ion-toolbar class="modal-header">
+          <ion-title class="modal-title">Inning Settings</ion-title>
+          <ion-button slot="end" fill="clear" (click)="closeInningSettings()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="modal-content">
+        <div class="modal-wrapper">
+          <div class="form-group">
+            <label class="form-label">New Allocated Overs</label>
+            <input type="number" class="form-input" [(ngModel)]="newOvers" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bowler's Limit</label>
+            <input type="number" class="form-input" [(ngModel)]="newLimit" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Balls in an Over</label>
+            <input type="number" class="form-input" [value]="ballsPerOver" disabled />
+          </div>
+          <div class="modal-actions">
+            <button class="action-btn update-btn" (click)="applyInningSettings()">Update</button>
+            <button class="action-btn cancel-btn" (click)="closeInningSettings()">Cancel</button>
+          </div>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

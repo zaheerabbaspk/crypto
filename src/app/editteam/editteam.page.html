@@ -1,0 +1,137 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: linear-gradient(135deg, #1a237e 0%, #283593 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <ion-buttons slot="start">
+      <ion-menu-button style="color: white;"></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="color: white; font-weight: 700; font-size: 20px; letter-spacing: 0.5px;">Team Management</ion-title>
+    <ion-icon name="person-outline" slot="end" style="color: white; font-size: 24px;"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background: #f8f9fa;">
+  <div style="padding: 16px;">
+    
+    <!-- Team Info Card -->
+    <div style="background: white; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #1976d2; text-align: center;">
+      <p style="color: #666; font-size: 12px; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">Team Management Panel</p>
+      <h2 style="color: #1976d2; font-weight: 700; font-size: 24px; margin: 0 0 4px 0;">yang star 786</h2>
+      <p style="color: #999; font-size: 13px; margin: 0;">Team ID: <strong>527</strong></p>
+    </div>
+
+    <!-- Players Section -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">👥 Players</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <ion-button expand="block" class="action-btn players-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          Team Players
+        </ion-button>
+        <ion-button expand="block" class="action-btn playing11-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          Playing 11
+        </ion-button>
+        <ion-button expand="block" class="action-btn edit-player-btn" routerLink="/icons" [queryParams]="{ teamId: 527, teamName: 'yang star 786' }" style="grid-column: 1 / -1;">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          Edit Player Details
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Matches Section -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">🏆 Matches</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <ion-button expand="block" class="action-btn tournament-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <path d="M6 9l6 6 6-6"/>
+            <circle cx="12" cy="12" r="1"/>
+            <circle cx="19" cy="12" r="1"/>
+            <circle cx="5" cy="12" r="1"/>
+          </svg>
+          Tournament Matches
+        </ion-button>
+        <ion-button expand="block" class="action-btn friendly-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <line x1="12" y1="8" x2="12" y2="16"/>
+            <line x1="8" y1="12" x2="16" y2="12"/>
+          </svg>
+          Friendly Matches
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">⚙️ Settings</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <ion-button expand="block" class="action-btn password-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          Reset Password
+        </ion-button>
+        <ion-button expand="block" class="action-btn teamname-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          Edit Team Name
+        </ion-button>
+        <ion-button expand="block" class="action-btn logo-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          Team Logo
+        </ion-button>
+        <ion-button expand="block" class="action-btn location-btn">
+          <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          Edit Location
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Bottom Action Buttons -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+      <ion-button expand="block" class="back-btn" routerLink="/twopage">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back
+      </ion-button>
+      <ion-button expand="block" class="switch-btn">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36M20.49 15a9 9 0 01-14.85 3.36"/>
+        </svg>
+        Switch Team
+      </ion-button>
+      <ion-button expand="block" class="logout-btn">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        Logout
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
+

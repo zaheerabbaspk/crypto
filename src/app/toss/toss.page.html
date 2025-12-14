@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Toss Winner</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">🪙</div>
+      <h1 class="hero-title">Who Won the Toss?</h1>
+      <p class="hero-subtitle">Select the team that won the coin toss</p>
+    </div>
+
+    <!-- Teams Container -->
+    <div class="teams-container">
+      <!-- Team 1 -->
+      <div class="team-card" 
+           [class.selected]="selectedTeam === 'team1'"
+           (click)="selectTeam('team1')">
+        <div class="team-logo">
+          <div class="logo-icon">🏏</div>
+        </div>
+        <h3 class="team-name">{{team1Name}}</h3>
+        <div class="team-badge" *ngIf="selectedTeam === 'team1'">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Selected
+        </div>
+      </div>
+
+      <!-- Team 2 -->
+      <div class="team-card" 
+           [class.selected]="selectedTeam === 'team2'"
+           (click)="selectTeam('team2')">
+        <div class="team-logo">
+          <div class="logo-icon">🏏</div>
+        </div>
+        <h3 class="team-name">{{team2Name}}</h3>
+        <div class="team-badge" *ngIf="selectedTeam === 'team2'">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Selected
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Button -->
+    <button class="next-btn" (click)="onNext()" [disabled]="!selectedTeam">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+      Next
+    </button>
+  </div>
+
+  <!-- Bat or Ball Selection Modal -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header [translucent]="true">
+        <ion-toolbar class="modal-header">
+          <ion-title class="modal-title">Choose Action</ion-title>
+          <ion-button slot="end" fill="clear" (click)="closeModal()" class="modal-close">
+            ✕
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="modal-content">
+        <div class="modal-wrapper">
+          
+          <!-- Hero Section -->
+          <div class="modal-hero">
+            <h2 class="modal-hero-title">{{tossWinnerName}} - What's Your Choice?</h2>
+            <p class="modal-hero-subtitle">Choose to bat or bowl first</p>
+          </div>
+
+          <!-- Choices Container -->
+          <div class="choices-container">
+            <!-- Bat Option -->
+            <div class="choice-card bat-card" (click)="selectChoice('bat')">
+              <div class="choice-icon">🏏</div>
+              <h3 class="choice-title">Bat First</h3>
+              <p class="choice-desc">Score runs and set a target</p>
+            </div>
+
+            <!-- Ball Option -->
+            <div class="choice-card ball-card" (click)="selectChoice('ball')">
+              <div class="choice-icon">🎾</div>
+              <h3 class="choice-title">Bowl First</h3>
+              <p class="choice-desc">Defend and restrict runs</p>
+            </div>
+          </div>
+
+          <!-- Info Text -->
+          <p class="modal-info">
+            Select your team's choice to proceed to the next step
+          </p>
+          
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

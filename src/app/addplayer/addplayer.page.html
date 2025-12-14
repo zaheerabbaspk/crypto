@@ -1,0 +1,55 @@
+<ion-content>
+
+  <!-- Back Button -->
+  <div class="back-btn">
+    <ion-button color="danger">Back</ion-button>
+  </div>
+
+  <!-- Title -->
+  <div class="page-title">Players Selection</div>
+
+  <!-- Match Info -->
+  <div class="match-info">
+    Zaherr <span class="vs-text">Vs</span> zaheer
+  </div>
+  <div class="match-info"><b>Match ID :</b> 916</div>
+  <div class="match-info"><b>Date :</b> Monday 20 November 2023</div>
+  <div class="match-info"><b>Division :</b> Friendly Game</div>
+  <div class="match-info"><b>Venue :</b> Aasad</div>
+
+  <!-- Search Section -->
+  <div class="search-section">
+    <div class="search-label">Search to select from existing players in the App</div>
+    <ion-input placeholder="Player Name"></ion-input>
+    <div class="note-text">
+      Did not find the player you want to Add ? Tap on Add new Player button to add brand new player
+    </div>
+    <ion-button expand="block" (click)="openAddPlayerAlert()">Add New Player</ion-button>
+  </div>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <div class="title">Selected Players / Squad</div>
+    <div class="desc">
+      Tap on a Selected Player to Remove from Squad or designate as Captain/Wicket Keeper/Scorer or Substitute(Extras) Players
+    </div>
+  </div>
+
+  <!-- Added Players List -->
+  <div *ngIf="players.length > 0" style="margin:20px;">
+    <h3>Players List</h3>
+    <ion-list>
+      <ion-item *ngFor="let p of players">
+        <ion-label>
+          <!-- PlayerService model: id, name, avatar?, active -->
+          <b>{{ p.name }}</b>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" color="primary" (click)="continueToSquad()">Continue</ion-button>
+    <ion-button expand="block" color="tertiary" routerLink="/icons" [queryParams]="{ teamId: teamId, teamName: teamName }">
+      View In Icons Page
+    </ion-button>
+  </div>
+
+</ion-content>

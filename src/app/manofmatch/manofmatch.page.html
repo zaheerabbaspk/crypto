@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: linear-gradient(45deg, #ff9800, #ffc107);">
+    <ion-title style="color: white; font-weight: bold; text-align: center;">Cricket Scoring and Stats App</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background: #f5f5f5;">
+  <div style="padding: 20px; text-align: center;">
+    
+    <!-- Man of The Match Title -->
+    <h1 style="color: #333; font-size: 32px; font-weight: bold; margin: 20px 0;">
+      Man of The Match
+    </h1>
+    
+    <!-- Selected by App -->
+    <h2 style="color: #666; font-size: 18px; margin: 10px 0;">
+      Selected by App
+    </h2>
+    
+    <!-- Man of Match Player -->
+    <div style="margin: 20px 0;">
+      <h3 style="color: #2196f3; font-size: 28px; font-weight: bold; margin: 10px 0;">
+        {{manOfMatchPlayer}}
+      </h3>
+      <p style="color: #333; font-size: 18px; margin: 5px 0;">
+        MVP Points: {{manOfMatchPoints}}
+      </p>
+    </div>
+    
+    <!-- Update & Exit Button -->
+    <ion-button style="--background: #ff9800; --color: white; height: 50px; font-size: 16px; font-weight: bold; border-radius: 10px; width: 200px; margin: 20px 0;"
+               (click)="updateAndExit()">
+      update & Exit
+    </ion-button>
+    
+    <!-- Manual Selection Text -->
+    <p style="color: #666; font-size: 14px; margin: 20px 0;">
+      Tap/click on Player's Name for Manual Selection
+    </p>
+    
+    <!-- Team Buttons -->
+    <div style="margin: 30px 0;">
+      <ion-button style="--background: #4caf50; --color: white; height: 50px; font-size: 16px; font-weight: bold; border-radius: 10px; width: 200px; margin: 10px 0; display: block;"
+                 (click)="showWinningTeam()">
+        Winning Team
+      </ion-button>
+      
+      <ion-button style="--background: #4caf50; --color: white; height: 50px; font-size: 16px; font-weight: bold; border-radius: 10px; width: 200px; margin: 10px 0; display: block;"
+                 (click)="showLosingTeam()">
+        Losing Team
+      </ion-button>
+    </div>
+    
+    <!-- Players List -->
+    <div *ngIf="showPlayersList" style="margin-top: 30px;">
+      <h2 style="color: #4caf50; font-size: 24px; font-weight: bold; margin: 20px 0;">
+        Players of {{selectedTeamName}}
+      </h2>
+      
+      <!-- Players Table Header -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 10px 0;">
+        <span style="color: #4caf50; font-weight: bold; font-size: 18px; flex: 1;">Players</span>
+        <span style="color: #4caf50; font-weight: bold; font-size: 18px; width: 80px; text-align: center;">MVP Points</span>
+      </div>
+      
+      <!-- Players List -->
+      <div *ngFor="let player of selectedTeamPlayers" 
+           style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 15px; border-radius: 8px; margin: 5px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); cursor: pointer;"
+           (click)="selectManOfMatch(player)">
+        <span style="color: #333; font-weight: bold; font-size: 16px; flex: 1;">{{player.name}}</span>
+        <span style="color: #333; font-weight: bold; font-size: 16px; width: 80px; text-align: center;">{{player.mvpPoints}}</span>
+      </div>
+    </div>
+    
+  </div>
+</ion-content>

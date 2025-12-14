@@ -1,0 +1,76 @@
+/* Header */
+.custom-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ff9800;
+  padding: 12px;
+  color: #fff;
+
+  .left-icon,
+  .right-icon {
+    font-size: 22px;
+    color: #fff;
+  }
+
+  .header-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+  }
+}
+
+/* Info strip */
+.info-strip {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  font-size: 14px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Tables */
+.score-table {
+  margin: 0;
+  font-size: 14px;
+}
+
+.table-head {
+  font-weight: bold;
+  background: #f2f2f2;
+}
+
+ion-item {
+  --inner-padding-start: 10px;
+  --inner-padding-end: 10px;
+}
+
+.right {
+  text-align: right;
+}
+
+/* Buttons grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  padding: 15px;
+}
+
+.score-btn {
+  --background: #f2f2f2;
+  --color: #000;
+  --border-radius: 8px;
+  --box-shadow: none;
+  height: 50px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.score-btn.undo {
+  grid-column: span 3;
+  --background: #ff9800;
+  --color: #fff;
+}

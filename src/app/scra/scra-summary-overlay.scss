@@ -1,0 +1,787 @@
+// IPL Match Summary Overlay Styles with Advanced 3D Background
+.match-summary-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #2a1845 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 4s ease-in-out infinite, fadeIn 0.8s ease-in-out;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+  overflow: hidden;
+  
+  // 3D Background Layer 1 - Geometric Shapes
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+      radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(156, 39, 176, 0.3) 0%, transparent 50%),
+      radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+      radial-gradient(circle at 70% 20%, rgba(33, 150, 243, 0.3) 0%, transparent 50%);
+    animation: rotate360 30s linear infinite, pulse3D 8s ease-in-out infinite;
+    transform: translateZ(-100px) rotateX(45deg);
+  }
+  
+  // 3D Background Layer 2 - Floating Particles
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.8), transparent),
+      radial-gradient(2px 2px at 40px 70px, rgba(255, 107, 53, 0.6), transparent),
+      radial-gradient(1px 1px at 90px 40px, rgba(156, 39, 176, 0.7), transparent),
+      radial-gradient(1px 1px at 130px 80px, rgba(33, 150, 243, 0.5), transparent),
+      radial-gradient(2px 2px at 160px 30px, rgba(255, 23, 68, 0.6), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: floatParticles 20s linear infinite, depth3D 15s ease-in-out infinite;
+    transform: translateZ(-50px) rotateY(10deg);
+  }
+  
+  &.ng-leave {
+    animation: fadeOut 0.8s ease-in-out;
+  }
+}
+
+.summary-content {
+  width: 95%;
+  max-width: 1400px;
+  color: white;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  background: linear-gradient(145deg, rgba(15, 32, 39, 0.95), rgba(32, 58, 67, 0.9), rgba(44, 62, 80, 0.95));
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.6),
+    0 15px 35px rgba(44, 62, 80, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(52, 152, 219, 0.3);
+  backdrop-filter: blur(15px);
+  position: relative;
+  
+  .ipl-header {
+    text-align: center;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 
+      0 10px 30px rgba(0, 0, 0, 0.5),
+      0 5px 15px rgba(52, 73, 94, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(52, 152, 219, 0.2);
+    
+    .ipl-logo {
+      .ipl-text {
+        font-size: 48px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 2px 10px rgba(52, 152, 219, 0.3);
+        letter-spacing: 3px;
+        transform: rotateY(5deg) rotateX(-2deg);
+      }
+    }
+    
+    .tournament-info {
+      .tournament-name {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 15px 0;
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      }
+      
+      .match-title {
+        font-size: 36px;
+        font-weight: 900;
+        color: #FFD700;
+        margin: 15px 0;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+        letter-spacing: 2px;
+      }
+      
+      .toss-info {
+        font-size: 20px;
+        color: #e0e0e0;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+  
+  .teams-container {
+    display: flex;
+    gap: 40px;
+    margin: 40px 0;
+    justify-content: space-between;
+  }
+  
+  .team-section {
+    flex: 1;
+    background: linear-gradient(145deg, #1e3c72, #ff6b35, #2a5298, #9c27b0, #1e3c72);
+    background-size: 400% 400%;
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 40px rgba(255, 107, 53, 0.3);
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    transform: rotateY(3deg) rotateX(-2deg);
+    animation: teamFloat3D 8s ease-in-out infinite, gradientShift 6s linear infinite;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, #FFD700, #ff6b35, #FFA500, #ff1744, #FFD700);
+      background-size: 300% 300%;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+      animation: gradientShift 3s linear infinite;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+      animation: rotate360 20s linear infinite;
+    }
+    
+    .team-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 25px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      border-radius: 12px;
+      
+      .team-logo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        
+        img {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          border: 3px solid #FFD700;
+          box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+        }
+        
+        .team-name-overlay {
+          font-size: 22px;
+          font-weight: 900;
+          color: #FFD700;
+          text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+          letter-spacing: 1px;
+        }
+      }
+      
+      .team-score {
+        text-align: right;
+        
+        .overs {
+          font-size: 16px;
+          color: #e0e0e0;
+          font-weight: 600;
+          margin-bottom: 5px;
+        }
+        
+        .score {
+          font-size: 42px;
+          font-weight: 900;
+          color: #FFD700;
+          text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+          letter-spacing: 2px;
+        }
+      }
+    }
+    
+    .players-list {
+      .player-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        margin: 8px 0;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        border-left: 4px solid #FFD700;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(5px);
+        }
+        
+        .player-name {
+          font-weight: 900;
+          font-size: 18px;
+          color: #ffffff;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+          min-width: 150px;
+        }
+        
+        .player-stats {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          
+          .runs {
+            color: #FFD700;
+            font-weight: 900;
+            font-size: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            min-width: 40px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+          }
+          
+          .balls {
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+            min-width: 30px;
+            text-align: center;
+          }
+        }
+        
+        .bowling-figures {
+          display: flex;
+          gap: 15px;
+          align-items: center;
+          
+          .figures {
+            color: #FF6B6B;
+            font-weight: 900;
+            font-size: 18px;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+            background: rgba(255, 107, 107, 0.1);
+            padding: 5px 12px;
+            border-radius: 8px;
+            min-width: 50px;
+            text-align: center;
+          }
+          
+          .overs {
+            color: #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 10px;
+            border-radius: 8px;
+            min-width: 40px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+  
+  .match-result {
+    text-align: center;
+    margin-top: 40px;
+    
+    .result-text {
+      font-size: 28px;
+      font-weight: 900;
+      color: #FFD700;
+      background: linear-gradient(45deg, #1e3c72, #2a5298, #1e3c72);
+      padding: 20px 40px;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 2px solid rgba(255, 215, 0, 0.3);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      letter-spacing: 1px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .man-of-match-section {
+      text-align: center;
+      margin: 30px 0;
+      background: linear-gradient(135deg, #f39c12, #e74c3c, #9b59b6, #3498db);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.5),
+        0 5px 20px rgba(243, 156, 18, 0.3);
+      border: 2px solid rgba(255, 215, 0, 0.4);
+      
+      .mom-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 20px;
+        
+        .mom-title {
+          font-size: 24px;
+          font-weight: 800;
+          color: white;
+          text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+          letter-spacing: 2px;
+        }
+        
+        .mom-trophy {
+          font-size: 32px;
+          filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.8));
+        }
+      }
+      
+      .mom-details {
+        .mom-name {
+          font-size: 28px;
+          font-weight: 900;
+          color: #ffd700;
+          text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+          margin-bottom: 8px;
+          letter-spacing: 1px;
+        }
+        
+        .mom-team {
+          font-size: 18px;
+          font-weight: 600;
+          color: #ecf0f1;
+          margin-bottom: 10px;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .mom-stats {
+          font-size: 16px;
+          color: #bdc3c7;
+          font-weight: 500;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+  }
+}
+
+// 3D Animation Keyframes
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float3D {
+  0%, 100% {
+    transform: rotateX(5deg) rotateY(-2deg) translateY(0px) translateZ(0px);
+  }
+  33% {
+    transform: rotateX(3deg) rotateY(1deg) translateY(-10px) translateZ(20px);
+  }
+  66% {
+    transform: rotateX(7deg) rotateY(-3deg) translateY(5px) translateZ(-10px);
+  }
+}
+
+@keyframes teamFloat3D {
+  0%, 100% {
+    transform: rotateY(3deg) rotateX(-2deg) translateY(0px) scale(1);
+  }
+  25% {
+    transform: rotateY(1deg) rotateX(1deg) translateY(-8px) scale(1.02);
+  }
+  50% {
+    transform: rotateY(5deg) rotateX(-3deg) translateY(-15px) scale(1.01);
+  }
+  75% {
+    transform: rotateY(2deg) rotateX(0deg) translateY(-5px) scale(1.03);
+  }
+}
+
+@keyframes headerGlow {
+  0%, 100% {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 107, 53, 0.4);
+    transform: rotateX(-3deg) scale(1);
+  }
+  50% {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 215, 0, 0.6);
+    transform: rotateX(-1deg) scale(1.02);
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 107, 53, 0.6);
+    transform: rotateY(5deg) rotateX(-2deg) scale(1);
+  }
+  50% {
+    text-shadow: 0 0 50px rgba(255, 23, 68, 0.9), 0 0 80px rgba(255, 215, 0, 0.8);
+    transform: rotateY(3deg) rotateX(1deg) scale(1.05);
+  }
+}
+
+@keyframes colorShift {
+  0% { filter: hue-rotate(0deg) saturate(1); }
+  25% { filter: hue-rotate(90deg) saturate(1.2); }
+  50% { filter: hue-rotate(180deg) saturate(1.4); }
+  75% { filter: hue-rotate(270deg) saturate(1.2); }
+  100% { filter: hue-rotate(360deg) saturate(1); }
+}
+
+@keyframes rotate360 {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Advanced 3D Background Layers
+.bg-3d-layer-1 {
+  position: absolute;
+  top: -100px;
+  left: -100px;
+  width: calc(100% + 200px);
+  height: calc(100% + 200px);
+  background: 
+    conic-gradient(from 0deg at 30% 40%, rgba(255, 107, 53, 0.4) 0deg, transparent 60deg),
+    conic-gradient(from 120deg at 70% 60%, rgba(156, 39, 176, 0.4) 0deg, transparent 60deg),
+    conic-gradient(from 240deg at 50% 20%, rgba(255, 215, 0, 0.3) 0deg, transparent 60deg);
+  animation: rotate360 25s linear infinite, wave3D 12s ease-in-out infinite;
+  transform: translateZ(-200px) rotateX(30deg) rotateY(15deg);
+  z-index: -3;
+}
+
+.bg-3d-layer-2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, transparent 40%, rgba(255, 23, 68, 0.2) 50%, transparent 60%),
+    linear-gradient(135deg, transparent 40%, rgba(33, 150, 243, 0.2) 50%, transparent 60%),
+    linear-gradient(-45deg, transparent 40%, rgba(76, 175, 80, 0.2) 50%, transparent 60%);
+  background-size: 300px 300px, 400px 400px, 250px 250px;
+  animation: moveBackground 18s linear infinite, tilt3D 10s ease-in-out infinite;
+  transform: translateZ(-150px) rotateX(-20deg) rotateZ(5deg);
+  z-index: -2;
+}
+
+.bg-3d-layer-3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse 200px 100px at 25% 25%, rgba(255, 193, 7, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 150px 200px at 75% 75%, rgba(233, 30, 99, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 180px 120px at 50% 10%, rgba(103, 58, 183, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 120px 180px at 10% 90%, rgba(0, 188, 212, 0.3) 0%, transparent 70%);
+  animation: breathe3D 8s ease-in-out infinite, spin3D 20s linear infinite;
+  transform: translateZ(-100px) rotateY(20deg) rotateX(10deg);
+  z-index: -1;
+}
+
+// New 3D Animation Keyframes
+@keyframes wave3D {
+  0%, 100% {
+    transform: translateZ(-200px) rotateX(30deg) rotateY(15deg) scale(1);
+  }
+  25% {
+    transform: translateZ(-180px) rotateX(35deg) rotateY(10deg) scale(1.1);
+  }
+  50% {
+    transform: translateZ(-220px) rotateX(25deg) rotateY(20deg) scale(0.9);
+  }
+  75% {
+    transform: translateZ(-190px) rotateX(40deg) rotateY(5deg) scale(1.05);
+  }
+}
+
+@keyframes moveBackground {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+  33% { background-position: 100% 50%, 50% 100%, 25% 75%; }
+  66% { background-position: 50% 100%, 100% 25%, 75% 25%; }
+  100% { background-position: 0% 0%, 0% 0%, 0% 0%; }
+}
+
+@keyframes tilt3D {
+  0%, 100% {
+    transform: translateZ(-150px) rotateX(-20deg) rotateZ(5deg);
+  }
+  50% {
+    transform: translateZ(-120px) rotateX(-15deg) rotateZ(-3deg);
+  }
+}
+
+@keyframes breathe3D {
+  0%, 100% {
+    transform: translateZ(-100px) rotateY(20deg) rotateX(10deg) scale(1);
+  }
+  50% {
+    transform: translateZ(-80px) rotateY(25deg) rotateX(15deg) scale(1.2);
+  }
+}
+
+@keyframes spin3D {
+  0% { transform: translateZ(-100px) rotateY(20deg) rotateX(10deg) rotateZ(0deg); }
+  100% { transform: translateZ(-100px) rotateY(20deg) rotateX(10deg) rotateZ(360deg); }
+}
+
+@keyframes floatParticles {
+  0% { transform: translateZ(-50px) rotateY(10deg) translateX(0px) translateY(0px); }
+  25% { transform: translateZ(-30px) rotateY(15deg) translateX(-20px) translateY(-10px); }
+  50% { transform: translateZ(-70px) rotateY(5deg) translateX(20px) translateY(10px); }
+  75% { transform: translateZ(-40px) rotateY(20deg) translateX(-10px) translateY(-5px); }
+  100% { transform: translateZ(-50px) rotateY(10deg) translateX(0px) translateY(0px); }
+}
+
+@keyframes depth3D {
+  0%, 100% {
+    transform: translateZ(-50px) rotateY(10deg) scale(1);
+  }
+  50% {
+    transform: translateZ(-20px) rotateY(15deg) scale(1.1);
+  }
+}
+
+@keyframes pulse3D {
+  0%, 100% {
+    transform: translateZ(-100px) rotateX(45deg) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateZ(-80px) rotateX(50deg) scale(1.2);
+    opacity: 1;
+  }
+}
+
+// 3D Geometric Shapes
+.geometric-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -4;
+  perspective: 1000px;
+}
+
+.shape {
+  position: absolute;
+  background: linear-gradient(45deg, rgba(255, 215, 0, 0.3), rgba(255, 107, 53, 0.2));
+  border-radius: 50%;
+  animation: floatParticles 15s ease-in-out infinite;
+}
+
+.shape-1 {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  left: 15%;
+  background: linear-gradient(135deg, rgba(255, 23, 68, 0.4), rgba(156, 39, 176, 0.3));
+  border-radius: 20px;
+  animation: depth3D 8s ease-in-out infinite, rotate360 20s linear infinite;
+  animation-delay: 0s;
+}
+
+.shape-2 {
+  width: 60px;
+  height: 60px;
+  top: 70%;
+  right: 20%;
+  background: linear-gradient(45deg, rgba(33, 150, 243, 0.4), rgba(0, 188, 212, 0.3));
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation: pulse3D 10s ease-in-out infinite, rotate360 25s linear infinite reverse;
+  animation-delay: 2s;
+}
+
+.shape-3 {
+  width: 100px;
+  height: 40px;
+  top: 30%;
+  right: 10%;
+  background: linear-gradient(90deg, rgba(76, 175, 80, 0.4), rgba(139, 195, 74, 0.3));
+  border-radius: 50px;
+  animation: wave3D 12s ease-in-out infinite, tilt3D 8s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.shape-4 {
+  width: 70px;
+  height: 70px;
+  top: 50%;
+  left: 5%;
+  background: linear-gradient(225deg, rgba(255, 193, 7, 0.4), rgba(255, 152, 0, 0.3));
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  animation: breathe3D 6s ease-in-out infinite, spin3D 18s linear infinite;
+  animation-delay: 1s;
+}
+
+.shape-5 {
+  width: 50px;
+  height: 120px;
+  top: 15%;
+  right: 40%;
+  background: linear-gradient(180deg, rgba(233, 30, 99, 0.4), rgba(156, 39, 176, 0.3));
+  border-radius: 25px;
+  animation: floatParticles 14s ease-in-out infinite, pulse3D 9s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+// Floating Particles
+.floating-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  perspective: 1200px;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.6), transparent);
+  border-radius: 50%;
+  animation: floatParticles 12s ease-in-out infinite;
+}
+
+.particle-1 {
+  width: 8px;
+  height: 8px;
+  top: 20%;
+  left: 25%;
+  background: radial-gradient(circle, rgba(255, 23, 68, 0.7), transparent);
+  animation: floatParticles 10s ease-in-out infinite, pulse3D 4s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  width: 12px;
+  height: 12px;
+  top: 60%;
+  left: 70%;
+  background: radial-gradient(circle, rgba(33, 150, 243, 0.6), transparent);
+  animation: depth3D 8s ease-in-out infinite, rotate360 15s linear infinite;
+  animation-delay: 1s;
+}
+
+.particle-3 {
+  width: 6px;
+  height: 6px;
+  top: 40%;
+  left: 80%;
+  background: radial-gradient(circle, rgba(76, 175, 80, 0.8), transparent);
+  animation: breathe3D 6s ease-in-out infinite, floatParticles 14s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.particle-4 {
+  width: 10px;
+  height: 10px;
+  top: 80%;
+  left: 30%;
+  background: radial-gradient(circle, rgba(255, 193, 7, 0.7), transparent);
+  animation: wave3D 9s ease-in-out infinite, spin3D 12s linear infinite;
+  animation-delay: 3s;
+}
+
+.particle-5 {
+  width: 14px;
+  height: 14px;
+  top: 10%;
+  left: 60%;
+  background: radial-gradient(circle, rgba(156, 39, 176, 0.6), transparent);
+  animation: tilt3D 7s ease-in-out infinite, pulse3D 5s ease-in-out infinite;
+  animation-delay: 4s;
+}
+
+.particle-6 {
+  width: 7px;
+  height: 7px;
+  top: 70%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(233, 30, 99, 0.8), transparent);
+  animation: floatParticles 11s ease-in-out infinite, rotate360 20s linear infinite reverse;
+  animation-delay: 5s;
+}
+
+.particle-7 {
+  width: 9px;
+  height: 9px;
+  top: 30%;
+  left: 45%;
+  background: radial-gradient(circle, rgba(0, 188, 212, 0.7), transparent);
+  animation: depth3D 10s ease-in-out infinite, breathe3D 8s ease-in-out infinite;
+  animation-delay: 6s;
+}
+
+.particle-8 {
+  width: 11px;
+  height: 11px;
+  top: 50%;
+  left: 85%;
+  background: radial-gradient(circle, rgba(255, 152, 0, 0.6), transparent);
+  animation: wave3D 13s ease-in-out infinite, tilt3D 9s ease-in-out infinite;
+  animation-delay: 7s;
+}

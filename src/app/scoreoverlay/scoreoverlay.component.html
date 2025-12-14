@@ -1,0 +1,118 @@
+<div *ngIf="scoringData" class="score-overlay">
+  <!-- Main Score Display -->
+  <ion-card class="score-card">
+    <ion-card-header>
+      <ion-card-title>{{ scoringData.battingTeam }} vs {{ scoringData.bowlingTeam }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <div class="team-score">
+              <h2>{{ scoringData.teamScore }}/{{ scoringData.wickets }}</h2>
+              <p>{{ scoringData.currentOver }}.{{ scoringData.ballsInOver }} overs</p>
+              <p>Run Rate: {{ scoringData.runRate }}</p>
+            </div>
+          </ion-col>
+          <ion-col size="6" *ngIf="scoringData.isSecondInnings">
+            <div class="target-info">
+              <h3>Target: {{ scoringData.targetScore }}</h3>
+              <p>Need {{ scoringData.runsRequired }} runs</p>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Batsmen Stats -->
+  <ion-card class="batsmen-card">
+    <ion-card-header>
+      <ion-card-title>Batsmen</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h3>{{ scoringData.strikerBatsman }} 
+              <ion-badge *ngIf="scoringData.onStrike === 'striker'" color="success">*</ion-badge>
+            </h3>
+            <p>{{ scoringData.strikerRuns }} runs ({{ scoringData.strikerBalls }} balls)</p>
+            <p>4s: {{ scoringData.strikerFours }} | 6s: {{ scoringData.strikerSixes }} | SR: {{ getStrikeRate(scoringData.strikerRuns, scoringData.strikerBalls) }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h3>{{ scoringData.nonStrikerBatsman }}
+              <ion-badge *ngIf="scoringData.onStrike === 'nonStriker'" color="success">*</ion-badge>
+            </h3>
+            <p>{{ scoringData.nonStrikerRuns }} runs ({{ scoringData.nonStrikerBalls }} balls)</p>
+            <p>4s: {{ scoringData.nonStrikerFours }} | 6s: {{ scoringData.nonStrikerSixes }} | SR: {{ getStrikeRate(scoringData.nonStrikerRuns, scoringData.nonStrikerBalls) }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Partnership -->
+  <ion-card class="partnership-card">
+    <ion-card-header>
+      <ion-card-title>Partnership</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ scoringData.partnershipRuns }} runs ({{ scoringData.partnershipBalls }} balls)</p>
+      <p>Run Rate: {{ scoringData.partnershipRunRate.toFixed(2) }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Bowler Stats -->
+  <ion-card class="bowler-card">
+    <ion-card-header>
+      <ion-card-title>Current Bowler</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h3>{{ scoringData.currentBowler }}</h3>
+      <p>{{ scoringData.bowlerType }}</p>
+      <p>{{ scoringData.bowlerOvers }} overs | {{ scoringData.bowlerRuns }} runs | {{ scoringData.bowlerWickets }} wickets</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Current Over Balls -->
+  <ion-card class="over-balls-card">
+    <ion-card-header>
+      <ion-card-title>This Over ({{ getOverRuns() }} runs)</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="ball-display">
+        <div *ngFor="let row of getBallRows(); let rowIndex = index" class="ball-row">
+          <div *ngFor="let ball of row" 
+               class="ball-circle" 
+               [style.background-color]="ball.color">
+            {{ ball.display }}
+          </div>
+          <div *ngFor="let empty of getEmptyCirclesForRow(rowIndex)" 
+               class="ball-circle empty">
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Commentary -->
+  <ion-card class="commentary-card">
+    <ion-card-header>
+      <ion-card-title>Commentary</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ scoringData.commentary }}</p>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+<div *ngIf="!scoringData" class="no-data">
+  <ion-card>
+    <ion-card-content>
+      <p>No scoring data available. Start scoring to see live data here.</p>
+    </ion-card-content>
+  </ion-card>
+</div>

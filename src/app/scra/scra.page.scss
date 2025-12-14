@@ -1,0 +1,485 @@
+/* Background just to simulate video frame */
+.pitch-bg {
+    --background: transparent;
+    background: #1a1a1a url('/assets/icon/shapes.svg') center/cover no-repeat; /* optional */
+  }
+  
+  /* Bottom overlay container */
+  .overlay {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    bottom: 12px;
+    color: #111;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    z-index: 1000;
+  }
+
+  /* ===== Animations ===== */
+  @keyframes slideUpIn {
+    0% { transform: translateY(24px); opacity: 0; }
+    60% { transform: translateY(-2px); opacity: 1; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes popIn {
+    0% { transform: scale(.85); opacity: 0; }
+    70% { transform: scale(1.03); opacity: 1; }
+    100% { transform: scale(1); }
+  }
+  @keyframes tickerShift {
+    0% { background-position: 0% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes pulseShadow {
+    0% { box-shadow: 0 6px 14px rgba(0,0,0,.30); }
+    100% { box-shadow: 0 10px 18px rgba(0,0,0,.45); }
+  }
+  @keyframes fadeInRight {
+    from { transform: translateX(16px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Respect user reduced-motion setting */
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+
+  /* White rounded base plate similar to broadcast graphic */
+  .plate {
+    position: relative;
+    background: linear-gradient(#ffffff, #f8f9fa);
+    border-radius: 14px;
+    padding: 8px 14px 10px 86px; /* extra left space for crest wedge */
+    box-shadow: 0 10px 22px rgba(0,0,0,.35);
+    overflow: hidden;
+    width: 100%;
+    max-width: 860px; /* TV plate width */
+    margin: 0 auto;
+    animation: slideUpIn 600ms cubic-bezier(.2,.8,.2,1) both;
+  }
+
+  /* Left angled crest area */
+  .bottom-accent {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b35 0%, #f7931e 50%, #ff6b35 100%);
+  }
+
+  .left-crest {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 86px;
+    background: linear-gradient(180deg,#e9ecef,#fff);
+    display: grid;
+    place-items: center;
+  }
+  .left-crest::after {
+    content: '';
+    position: absolute;
+    right: -24px;
+    top: 0;
+    bottom: 0;
+    width: 48px;
+    background: #ffffff;
+    transform: skewX(-20deg);
+    box-shadow: inset -1px 0 0 rgba(0,0,0,.08);
+  }
+  .left-crest img { width: 64px; height: 64px; object-fit: contain; filter: drop-shadow(0 3px 4px rgba(0,0,0,.25)); }
+
+  /* Top row: score + ticker + sponsor */
+  .score-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Left: red score and green overs pill */
+  .left-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px 6px 16px;
+    border-radius: 8px;
+    background: linear-gradient(#b00013, #7d0010);
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    position: relative;
+    animation: popIn 480ms ease-out 120ms both;
+  }
+  .score-badge .runs { font-size: 28px; line-height: 1; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+  .score-badge .dash,
+  .score-badge .wkts { font-size: 24px; opacity: .95; text-shadow: 0 1px 0 rgba(0,0,0,.25); }
+  .score-badge { margin-right: 6px; }
+  /* little triangular notch at right edge like TV graphic */
+  .score-badge::after {
+    content: '';
+    position: absolute;
+    right: -10px;
+    top: 0;
+    bottom: 0;
+    width: 18px;
+    background: inherit;
+    transform: skewX(-18deg);
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: 4px 0 8px rgba(0,0,0,.15);
+  }
+
+  .over-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+    animation: popIn 480ms ease-out 220ms both;
+  }
+  .over-pill .phase {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #1fb255;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .over-pill .overs {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    padding: 0 8px;
+    background: #ffffff;
+    border: 2px solid #34c759;
+    border-radius: 10px;
+    color: #0e6f35;
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: 0 3px 8px rgba(0,0,0,.2);
+  }
+
+  /* Center: blue ticker */
+  .ticker {
+    background: linear-gradient(90deg, #1283e8, #0e5fb7 40%, #1283e8 80%);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,.35);
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    position: relative;
+    border: 3px solid #ffffff; /* white edge like broadcast */
+    background-size: 200% auto;
+    animation: tickerShift 6s linear infinite;
+  }
+  .ticker-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 17px; text-shadow: 0 1px 0 rgba(0,0,0,.25); text-transform: uppercase; }
+
+  /* Chevron accents like broadcast (black/white slashes) */
+  .ticker::before,
+  .ticker::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 18px;
+    transform: skewX(-18deg);
+  }
+  .ticker::before {
+    left: -10px;
+    background: linear-gradient(90deg, rgba(0,0,0,.45), transparent);
+  }
+  .ticker::after {
+    right: -10px;
+    background: linear-gradient(270deg, rgba(0,0,0,.45), transparent);
+  }
+
+  /* Right: small sponsor chip */
+  .right-group .sponsor {
+    background: linear-gradient(#b00013, #7d0010);
+    color: #fff;
+    border-radius: 999px;
+    padding: 6px 14px;
+    border: 3px solid #ffffff;
+    font-weight: 900;
+    letter-spacing: .4px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.4);
+    animation: pulseShadow 3s ease-in-out 400ms infinite alternate;
+  }
+  /* angled black slashes before sponsor like broadcast */
+  .right-group { position: relative; padding-left: 12px; }
+  .right-group::before,
+  .right-group::after {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 2px;
+    bottom: 2px;
+    width: 12px;
+    transform: skewX(-18deg);
+    background: rgba(0,0,0,.65);
+    border-radius: 2px;
+  }
+  .right-group::after { left: -34px; opacity: .55; }
+
+  /* Bottom row: team strip + batters + bowler */
+  .team-row {
+    margin-top: 6px;
+    display: grid;
+    grid-template-columns: 180px 1fr 190px; /* narrower left bar per screenshot */
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(#ffffff, #f7f7f7);
+    border-radius: 10px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.3);
+    overflow: hidden;
+    border-top: 4px solid #ffffff;
+    min-height: 52px;
+    animation: fadeInRight 520ms ease-out 180ms both;
+  }
+
+  /* Left maroon team bar */
+  .team-name {
+    position: relative;
+    background: linear-gradient(#7b1420, #5a0d16);
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+  }
+  .team-name::after { /* right grey notch */
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    background: #e9ecef;
+    transform: skewX(-20deg);
+    box-shadow: inset -1px 0 0 rgba(0,0,0,.08);
+  }
+
+  /* Players section */
+  .players {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 10px 16px;
+    color: #111;
+    font-weight: 800;
+  }
+  .players .batter { white-space: nowrap; display: inline-flex; align-items: baseline; gap: 6px; }
+  .players .batter .name { text-transform: uppercase; font-weight: 900; letter-spacing: .4px; text-shadow: 0 1px 0 rgba(0,0,0,.1); font-size: 16px; }
+  .players .batter .runs { font-weight: 900; text-shadow: 0 1px 0 rgba(0,0,0,.1); font-size: 16px; }
+  .players .batter .star { font-weight: 900; margin-left: -4px; }
+  .players .batter .balls { font-size: 12px; opacity: .7; position: relative; top: -2px; }
+  .players .divider { opacity: .5; }
+  .players::before { /* vertical separator after maroon bar */
+    content: '';
+    width: 1px;
+    height: 24px;
+    background: rgba(0,0,0,.18);
+    display: inline-block;
+    margin-right: 16px;
+  }
+
+  .bowler {
+    padding: 10px 14px;
+    text-align: right;
+    font-weight: 800;
+    white-space: nowrap;
+    position: relative;
+  }
+  .bowler .name { text-transform: uppercase; font-weight: 900; margin-right: 6px; text-shadow: 0 1px 0 rgba(0,0,0,.1); font-size: 16px; }
+  .bowler .figures { font-weight: 900; margin-right: 8px; text-shadow: 0 1px 0 rgba(0,0,0,.1); font-size: 16px; }
+  .bowler .overs { font-size: 12px; opacity: .75; position: relative; top: -2px; }
+  .bowler::before { /* vertical separator before bowler */
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 24px;
+    background: rgba(0,0,0,.18);
+  }
+
+  /* Overlapping round logo on right corner like KR crest */
+  .right-corner-logo {
+    position: absolute;
+    right: -6px;
+    top: -18px;
+    width: 66px;
+    height: 66px;
+    background: radial-gradient(circle at 30% 30%, #fff, #ddd);
+    border-radius: 50%;
+    box-shadow: 0 8px 18px rgba(0,0,0,.35);
+    display: grid;
+    place-items: center;
+    border: 3px solid #ffffff;
+    animation: popIn 520ms ease-out 260ms both;
+  }
+  .right-corner-logo img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+
+  /* bottom accent shadow bar under plate */
+  .bottom-accent {
+    position: absolute;
+    left: 30px;
+    right: 30px;
+    bottom: -8px;
+    height: 12px;
+    border-radius: 12px;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,.35), transparent 70%);
+    pointer-events: none;
+  }
+
+  // Runs Animation Styles
+  .score-badge {
+    position: relative;
+  }
+  
+  .runs-animation {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    font-weight: 900;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 12px 20px;
+    border-radius: 25px;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    z-index: 9999;
+    white-space: nowrap;
+
+    &.show {
+      opacity: 1;
+      animation: runsPopUp 2s ease-out forwards;
+    }
+
+    // Different colors for different runs
+    &.runs-1 {
+      background: linear-gradient(45deg, #4CAF50, #66BB6A);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+    }
+
+    &.runs-2 {
+      background: linear-gradient(45deg, #2196F3, #42A5F5);
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.4);
+    }
+
+    &.runs-3 {
+      background: linear-gradient(45deg, #FF9800, #FFB74D);
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+    }
+
+    &.runs-4 {
+      background: linear-gradient(45deg, #E91E63, #F06292);
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+      animation: boundaryAnimation 2s ease-out forwards;
+    }
+
+    &.runs-6 {
+      background: linear-gradient(45deg, #9C27B0, #BA68C8);
+      box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+      animation: sixerAnimation 2s ease-out forwards;
+    }
+  }
+
+  @keyframes runsPopUp {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px) scale(0.8);
+    }
+    20% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px) scale(1.1);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-15px) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-30px) scale(0.9);
+    }
+  }
+
+  @keyframes boundaryAnimation {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px) scale(0.8);
+    }
+    15% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-10px) scale(1.2);
+    }
+    30% {
+      transform: translateX(-50%) translateY(-15px) scale(1.1);
+    }
+    50% {
+      transform: translateX(-50%) translateY(-20px) scale(1.05);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-40px) scale(0.8);
+    }
+  }
+
+  @keyframes sixerAnimation {
+    0% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px) scale(0.8) rotate(0deg);
+    }
+    20% {
+      opacity: 1;
+      transform: translateX(-50%) translateY(-15px) scale(1.3) rotate(5deg);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-25px) scale(1.2) rotate(-3deg);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-30px) scale(1.1) rotate(2deg);
+    }
+    80% {
+      transform: translateX(-50%) translateY(-35px) scale(1.05) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-50px) scale(0.8) rotate(0deg);
+    }
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 640px) {
+    .team-row { grid-template-columns: 140px 1fr 130px; }
+    .score-badge .runs { font-size: 18px; }
+    .score-badge .dash, .score-badge .wkts { font-size: 18px; }
+    .ticker { padding: 8px 10px; font-size: 13px; }
+  }
+
+@import './scra-summary-overlay.scss';

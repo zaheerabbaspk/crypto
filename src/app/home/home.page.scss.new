@@ -1,0 +1,141 @@
+.login-page {
+  --background: #f2f2f2;
+}
+
+.top-header {
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10px;
+  background: #fff;
+  font-size: 13px;
+}
+
+.menu-banner {
+  background: #0B0B45;
+  padding: 0;
+  position: relative;
+}
+
+.menu-btn {
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  color: white;
+  font-size: 28px;
+  z-index: 10;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+}
+
+.login-box {
+  background: white;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.profile-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.title-text {
+  text-align: center;
+  font-size: 14px;
+  margin: 10px 15px;
+  color: black;
+}
+
+.blue-text {
+  color: #0070C0;
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+.input-item {
+  padding: 0 15px;
+}
+
+.input-label {
+  font-weight: bold;
+  color: black;
+}
+
+.forgot-wrap {
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.forgot-text {
+  color: #007bff;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.btn-container {
+  background: #ccc;
+  padding: 10px;
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.btn-green {
+  --background: #4CAF50;
+}
+
+.btn-orange {
+  --background: #FFA500;
+}
+
+.btn-red {
+  --background: #f44336;
+}
+
+.btn-google {
+  --background: #4285F4;
+  --color: white;
+  --border-radius: 4px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --box-shadow: none;
+  text-transform: none;
+  font-weight: 500;
+  
+  ion-icon {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+  
+  &:hover {
+    --background: #3367d6;
+  }
+}
+
+.footer-logo {
+  text-align: center;
+  margin: 20px 0;
+  
+  img {
+    max-width: 200px;
+    height: auto;
+  }
+}

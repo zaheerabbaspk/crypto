@@ -1,0 +1,210 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>scra</ion-title>
+  </ion-toolbar>
+ </ion-header>
+
+<ion-content [fullscreen]="true" class="pitch-bg">
+  <!-- TV-style bottom overlay -->
+  <div class="overlay">
+    <!-- Test Animation Button -->
+    <button (click)="testAnimation()" style="position: fixed; top: 10px; right: 10px; z-index: 10000; background: red; color: white; padding: 10px;">
+      Test Animation
+    </button>
+    
+    <!-- Test Summary Button -->
+    <button (click)="displayMatchSummaryOverlay()" style="position: fixed; top: 60px; right: 10px; z-index: 10000; background: blue; color: white; padding: 10px;">
+      Test Summary
+    </button>
+    
+    <div class="plate">
+      <!-- left crest wedge -->
+      <div class="left-crest">
+        <!-- Team crest placeholder -->
+        <img src="assets/logos/warriors.svg" alt="crest" />
+      </div>
+
+      <!-- Primary score row -->
+      <div class="score-row">
+        <div class="left-group">
+          <div class="score-badge">
+            <span class="runs">{{ innings.runs }}</span>
+            <span class="dash">-</span>
+            <span class="wkts">{{ innings.wickets }}</span>
+            <!-- Runs Animation -->
+            <div class="runs-animation" 
+                 [class.show]="showRunsAnimation" 
+                 [ngClass]="'runs-' + animatedRuns">
+              +{{ animatedRuns }}
+            </div>
+          </div>
+          <div class="over-pill">
+            <span class="phase">{{ innings.phaseTag }}</span>
+            <span class="overs">{{ innings.overs }}</span>
+          </div>
+        </div>
+
+        <div class="ticker" aria-label="comparison ticker">
+          <span class="ticker-text">{{ comparisonText }}</span>
+        </div>
+
+        <div class="right-group">
+          <div class="sponsor">orginol</div>
+        </div>
+      </div>
+
+      <!-- Team / players row -->
+      <div class="team-row">
+        <div class="team-name">{{ team.short }}</div>
+        <div class="players">
+          <div class="batter">
+            <span class="name">{{ striker.name }}</span>
+            <span class="runs">{{ striker.runs }}</span>
+            <span class="star" *ngIf="striker.onStrike">*</span>
+            <span class="balls">{{ striker.balls }}</span>
+          </div>
+          <span class="divider">•</span>
+          <div class="batter">
+            <span class="name">{{ nonStriker.name }}</span>
+            <span class="runs">{{ nonStriker.runs }}</span>
+            <span class="balls">{{ nonStriker.balls }}</span>
+          </div>
+        </div>
+        <div class="bowler">
+          <span class="name">{{ bowler.name }}</span>
+          <span class="figures">{{ bowler.wickets }}-{{ bowler.runs }}</span>
+          <span class="overs">{{ bowler.overs }}</span>
+        </div>
+      </div>
+
+      <!-- right corner round logo -->
+      <div class="right-corner-logo">
+        <img src="assets/logos/kr.svg" alt="KR" />
+      </div>
+
+      <!-- bottom accent bar -->
+      <div class="bottom-accent"></div>
+    </div>
+  </div>
+
+  <!-- Match Summary Overlay -->
+  <div class="match-summary-overlay" *ngIf="showSummaryOverlay" [@fadeInOut]>
+    <!-- 3D Background Elements -->
+    <div class="bg-3d-layer-1"></div>
+    <div class="bg-3d-layer-2"></div>
+    <div class="bg-3d-layer-3"></div>
+    
+    <!-- 3D Geometric Shapes -->
+    <div class="geometric-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>
+    
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+      <div class="particle particle-1"></div>
+      <div class="particle particle-2"></div>
+      <div class="particle particle-3"></div>
+      <div class="particle particle-4"></div>
+      <div class="particle particle-5"></div>
+      <div class="particle particle-6"></div>
+      <div class="particle particle-7"></div>
+      <div class="particle particle-8"></div>
+    </div>
+    <div class="summary-content">
+      <!-- IPL Header -->
+      <div class="ipl-header">
+        <div class="ipl-logo">
+          <span class="ipl-text">IPL</span>
+        </div>
+        <div class="tournament-info">
+          <div class="tournament-name">DREAM11 IPL 2020</div>
+          <div class="match-title">MATCH SUMMARY</div>
+          <div class="toss-info">OVER COMPLETED</div>
+        </div>
+      </div>
+
+      <!-- Teams Container -->
+      <div class="teams-container">
+        <!-- Team A (Capitals) -->
+        <div class="team-section team-a">
+          <div class="team-header">
+            <div class="team-logo">
+              <img src="assets/logos/team-a.png" alt="Team A" onerror="this.style.display='none'">
+              <div class="team-name-overlay">{{summaryData?.teamAName || 'TEAM A'}}</div>
+            </div>
+            <div class="team-score">
+              <div class="overs">OVERS {{summaryData?.currentOver || 20}}</div>
+              <div class="score">{{summaryData?.teamAScore || 0}}-{{summaryData?.teamAWickets || 0}}</div>
+            </div>
+          </div>
+          
+          <!-- Team A Players -->
+          <div class="players-list">
+            <div class="player-row" *ngFor="let player of summaryData?.teamAPlayers">
+              <div class="player-name">{{player.name}}</div>
+              <div class="player-stats">
+                <span class="runs">{{player.runs}}</span>
+                <span class="balls">{{player.balls}}</span>
+              </div>
+              <div class="bowling-figures">
+                <span class="figures">{{player.bowlingFigures}}</span>
+                <span class="overs">{{player.bowlingOvers}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team B (Kings XI) -->
+        <div class="team-section team-b">
+          <div class="team-header">
+            <div class="team-logo">
+              <img src="assets/logos/team-b.png" alt="Team B" onerror="this.style.display='none'">
+              <div class="team-name-overlay">{{summaryData?.teamBName || 'TEAM B'}}</div>
+            </div>
+            <div class="team-score">
+              <div class="overs">OVERS {{summaryData?.currentOver || 20}}</div>
+              <div class="score">{{summaryData?.teamBScore || 0}}-{{summaryData?.teamBWickets || 0}}</div>
+            </div>
+          </div>
+          
+          <!-- Team B Players -->
+          <div class="players-list">
+            <div class="player-row" *ngFor="let player of summaryData?.teamBPlayers">
+              <div class="player-name">{{player.name}}</div>
+              <div class="player-stats">
+                <span class="runs">{{player.runs}}</span>
+                <span class="balls">{{player.balls}}</span>
+              </div>
+              <div class="bowling-figures">
+                <span class="figures">{{player.bowlingFigures}}</span>
+                <span class="overs">{{player.bowlingOvers}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Man of the Match Section -->
+      <div class="man-of-match-section" *ngIf="summaryData?.manOfTheMatch">
+        <div class="mom-header">
+          <div class="mom-title">MAN OF THE MATCH</div>
+          <div class="mom-trophy">🏆</div>
+        </div>
+        <div class="mom-details">
+          <div class="mom-name">{{summaryData.manOfTheMatch.name}}</div>
+          <div class="mom-team">{{summaryData.manOfTheMatch.team}}</div>
+          <div class="mom-stats">{{summaryData.manOfTheMatch.stats}}</div>
+        </div>
+      </div>
+
+      <!-- Match Result Banner -->
+      <div class="match-result">
+        <div class="result-text">{{summaryData?.matchResult || 'MATCH COMPLETED'}}</div>
+      </div>
+    </div>
+  </div>
+</ion-content>

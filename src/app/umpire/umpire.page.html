@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Umpires Info</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Innings Info Section -->
+    <div class="innings-info">
+      <h2 class="innings-title">{{battingTeam}} Inning</h2>
+      <button class="change-inning-btn" (click)="changeInning()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64-4.36A9 9 0 0020.49 15"/>
+        </svg>
+        Change Inning
+      </button>
+    </div>
+    
+    <!-- First Umpire Section -->
+    <div class="form-card">
+      <label class="field-label">First Umpire Name</label>
+      <div class="input-field green">
+        <ion-input class="text-input" placeholder="Enter first umpire name" [(ngModel)]="firstUmpireName"></ion-input>
+      </div>
+    </div>
+    
+    <!-- Second Umpire Section -->
+    <div class="form-card">
+      <label class="field-label">Second Umpire Name</label>
+      <div class="input-field blue">
+        <ion-input class="text-input" placeholder="Enter second umpire name" [(ngModel)]="secondUmpireName"></ion-input>
+      </div>
+    </div>
+    
+    <!-- Next Button -->
+    <button class="start-btn" (click)="onNext()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      Next
+    </button>
+    
+  </div>
+</ion-content>

@@ -1,0 +1,149 @@
+/* Page Header */
+.page-header {
+  --background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.page-title {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Page Content */
+.page-content {
+  --background: #f8f9fa;
+}
+
+.page-container {
+  padding: 16px;
+}
+
+/* Info Card */
+.info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 4px solid #1976d2;
+}
+
+.info-title {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0 0 8px 0;
+}
+
+.info-text {
+  color: #666;
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Section Wrapper */
+.section-wrapper {
+  margin-bottom: 24px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px 0;
+  padding: 0 4px;
+}
+
+/* Button Grid */
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Button Icon */
+.btn-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Action Buttons */
+.action-btn {
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  transition: all 0.2s ease;
+}
+
+.add-btn {
+  --background: #c8e6c9;
+  --background-hover: #a5d6a7;
+  --background-activated: #81c784;
+  --color: #2e7d32;
+}
+
+.edit-btn {
+  --background: #bbdefb;
+  --background-hover: #90caf9;
+  --background-activated: #64b5f6;
+  --color: #1976d2;
+}
+
+.delete-btn {
+  --background: #ffcdd2;
+  --background-hover: #ef9a9a;
+  --background-activated: #e57373;
+  --color: #c62828;
+}
+
+.scorecard-btn {
+  --background: #b3e5fc;
+  --background-hover: #81d4fa;
+  --background-activated: #4fc3f7;
+  --color: #0277bd;
+}
+
+/* Back Button Wrapper */
+.back-button-wrapper {
+  margin-bottom: 24px;
+}
+
+/* Back Button */
+.back-btn {
+  --background: #e0e0e0;
+  --background-hover: #bdbdbd;
+  --background-activated: #9e9e9e;
+  --color: #333;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  height: 44px;
+  transition: all 0.2s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .action-btn,
+  .back-btn {
+    height: 40px;
+    font-size: 12px;
+  }
+
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+}

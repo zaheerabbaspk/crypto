@@ -1,0 +1,123 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Select Players</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">👥</div>
+      <h1 class="hero-title">Choose Your Players</h1>
+      <p class="hero-subtitle">Select opening batsmen and bowler to start</p>
+    </div>
+
+    <!-- Innings Info Section -->
+    <div class="innings-info">
+      <h2 class="innings-title">{{battingTeam}} Inning</h2>
+      <button class="change-inning-btn" (click)="changeInning()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 4 23 10 17 10"/>
+          <polyline points="1 20 1 14 7 14"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64-4.36A9 9 0 0020.49 15"/>
+        </svg>
+        Change Inning
+      </button>
+    </div>
+    
+    <!-- Batsmen Section - 6 Column Grid -->
+    <div class="grid-6col">
+      
+      <!-- Striker End Batsman - Column 1 -->
+      <div class="player-card striker-card" (click)="selectBatsman('striker')">
+        <div class="player-badge">Striker</div>
+        <div class="player-avatar">
+          <div class="avatar-icon">🏏</div>
+        </div>
+        <h3 class="player-name">{{strikerBatsman || 'Select Batsman'}}</h3>
+        <p class="player-role">Opening Batsman</p>
+      </div>
+      
+      <!-- Non-Striker End Batsman - Column 2 -->
+      <div class="player-card non-striker-card" (click)="selectBatsman('nonStriker')">
+        <div class="player-badge">Non-Striker</div>
+        <div class="player-avatar">
+          <div class="avatar-icon">🏏</div>
+        </div>
+        <h3 class="player-name">{{nonStrikerBatsman || 'Select Batsman'}}</h3>
+        <p class="player-role">Opening Batsman</p>
+      </div>
+    </div>
+    
+    <!-- Bowler Section - 6 Column Grid (Centered) -->
+    <div class="grid-6col bowler-grid">
+      <!-- Empty columns 1-2 (for alignment with batsmen) -->
+      <div></div>
+      <div></div>
+      
+      <!-- Bowler - Column 3 (Centered with VS info) -->
+      <div class="bowler-wrapper">
+        <!-- VS Section -->
+        <div class="vs-section-inline">
+        
+          <div class="vs-divider-inline">
+            <span class="vs-text">VS</span>
+          </div>
+          <h2 class="bowling-team-inline">{{bowlingTeam}}</h2>
+        </div>
+        
+        <!-- Bowler Card -->
+        <div class="player-card bowler-card" (click)="selectBowler()">
+          <div class="player-badge bowler-badge">Bowler</div>
+          <div class="player-avatar">
+            <div class="avatar-icon">🎾</div>
+          </div>
+          <h3 class="player-name">{{openingBowler || 'Select Bowler'}}</h3>
+          <p class="player-role">Opening Bowler</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Start Scoring Button -->
+    <button class="start-btn" (click)="startScoring()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"/>
+      </svg>
+      Start Scoring
+    </button>
+    
+  </div>
+
+  <!-- Player Selection Modal -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header [translucent]="true">
+        <ion-toolbar class="modal-header">
+          <ion-title class="modal-title">{{modalTitle}}</ion-title>
+          <ion-button slot="end" fill="clear" (click)="closeModal()" class="modal-close">
+            ✕
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content class="modal-content">
+        <div class="modal-wrapper">
+          <ion-list class="players-list">
+            <ion-item *ngFor="let player of availablePlayers" 
+                     class="player-item"
+                     (click)="selectPlayer(player)">
+              <ion-label>
+                <h3 class="item-name">{{player.name}}</h3>
+                <p class="item-desc">{{player.displayName || 'Player'}}</p>
+              </ion-label>
+              <span slot="end" class="item-arrow">›</span>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

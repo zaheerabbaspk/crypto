@@ -1,0 +1,177 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="page-header">
+    <ion-title class="page-title">Player Selection</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="page-content">
+  <div class="page-wrapper">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <div class="hero-icon">👥</div>
+      <h2 class="hero-title">Select Team Squad</h2>
+      <p class="hero-subtitle">Choose players for <span class="team-name">{{teamName}}</span></p>
+    </div>
+
+    <!-- Next Button -->
+    <div class="next-button-section">
+      <button class="next-btn" (click)="onNext()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+        Next
+      </button>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-card">
+      <h3 class="section-title">Search Players</h3>
+      <p class="section-subtitle">Find existing players in the app</p>
+      
+      <div class="search-box">
+        <input type="text" class="search-input" placeholder="Enter player name" [(ngModel)]="searchQuery" />
+        <button class="search-btn" (click)="searchPlayers()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Add New Player Section -->
+    <div class="add-player-card">
+      <div class="card-icon">➕</div>
+      <h3 class="card-title">Add New Player</h3>
+      <p class="card-text">Didn't find the player you're looking for? Create a new player profile</p>
+      
+      <button class="add-player-btn" (click)="addNewPlayer()">
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Add New Player
+      </button>
+    </div>
+
+    <!-- Selected Players Section -->
+    <div class="players-card">
+      <h3 class="section-title">Selected Squad</h3>
+      <p class="section-subtitle">Players in your team</p>
+      
+      <div class="players-list">
+        <div *ngIf="selectedPlayers.length === 0" class="empty-state">
+          <div class="empty-icon">📭</div>
+          <p class="empty-text">No players selected yet</p>
+        </div>
+        
+        <div *ngIf="selectedPlayers.length > 0" class="players-grid">
+          <div *ngFor="let player of selectedPlayers" 
+               class="player-item"
+               [class.selected]="isPlayerSelected(player)"
+               (click)="togglePlayerSelection(player)">
+            <div class="player-avatar">{{player.name.charAt(0).toUpperCase()}}</div>
+            <div class="player-info">
+              <p class="player-name">{{player.name}}</p>
+            </div>
+            <div class="player-checkbox">
+              <svg *ngIf="isPlayerSelected(player)" viewBox="0 0 24 24" fill="currentColor">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Player Modal -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header [translucent]="true">
+        <ion-toolbar class="modal-header">
+          <ion-title class="modal-title">Add New Player</ion-title>
+          <ion-button slot="end" fill="clear" (click)="closeModal()" class="modal-close">
+            ✕
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content class="modal-content">
+        <div class="modal-wrapper">
+          
+          <p class="mandatory-note">Fields with <span class="required">*</span> are mandatory</p>
+          
+          <!-- Player Avatar Section -->
+          <div class="avatar-section">
+            <div class="avatar-placeholder">
+              <div class="avatar-icon">👤</div>
+            </div>
+            <button class="upload-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              Upload Photo
+            </button>
+          </div>
+          
+          <!-- Form Fields -->
+          <div class="form-group">
+            <label class="form-label">* Player Name</label>
+            <input type="text" class="form-input" placeholder="Enter player's full name" [(ngModel)]="newPlayer.firstName" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Display Name</label>
+            <input type="text" class="form-input" placeholder="Short name (max 10 characters)" [(ngModel)]="newPlayer.displayName" maxlength="10" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-input" placeholder="Complete mailing address" [(ngModel)]="newPlayer.address" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" placeholder="Contact number" [(ngModel)]="newPlayer.phone" />
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label">Date of Birth</label>
+            <input type="date" class="form-input" [(ngModel)]="newPlayer.dateOfBirth" />
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="modal-actions">
+            <button class="action-btn save-more-btn" (click)="saveAndAddMore()">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Save & Add More
+            </button>
+            
+            <button class="action-btn save-finish-btn" (click)="saveAndFinish()">
+              <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Save & Finish
+            </button>
+          </div>
+          
+          <button class="action-btn cancel-btn" (click)="closeModal()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Cancel
+          </button>
+          
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

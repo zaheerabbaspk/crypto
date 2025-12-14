@@ -1,0 +1,77 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: linear-gradient(135deg, #1a237e 0%, #283593 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <ion-title style="color: white; font-weight: 700; font-size: 20px; letter-spacing: 0.5px;">Select Team</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background: #f8f9fa;">
+  <div style="padding: 16px;">
+    
+    <!-- Info Section -->
+    <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #1976d2;">
+      <h3 style="color: #1976d2; font-weight: 600; font-size: 15px; margin: 0 0 8px 0;">Choose a Team</h3>
+      <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.5;">
+        Select a team from your list or create a new one. Tap on any team to select it.
+      </p>
+    </div>
+
+    <!-- Search Box -->
+    <div style="margin-bottom: 24px;">
+      <ion-searchbar placeholder="Search teams..." style="--background: white; --border-radius: 8px; --box-shadow: 0 2px 8px rgba(0,0,0,0.06);" debounce="500"></ion-searchbar>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+      <ion-button expand="block" mode="ios" class="primary-btn">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Add Team
+      </ion-button>
+      <ion-button expand="block" mode="ios" class="secondary-btn" (click)="goBack()">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back
+      </ion-button>
+    </div>
+
+    <!-- Team List -->
+    <div *ngIf="teams && teams.length > 0; else noTeams">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">Your Teams</h3>
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div *ngFor="let team of teams; let i = index; trackBy: trackByTeamId" 
+             style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #1976d2; cursor: pointer; transition: all 0.3s ease;" 
+             (click)="selectTeam(team)"
+             [style.box-shadow]="'0 4px 12px rgba(25, 118, 210, 0.2)'">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 56px; height: 56px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <img src="assets/icon/favicon.png" style="width: 48px; height: 48px; object-fit: contain;" />
+            </div>
+            <div style="flex: 1;">
+              <p style="color: #666; font-size: 12px; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.5px;">Team {{i + 1}}</p>
+              <h3 style="color: #1976d2; font-weight: 700; font-size: 16px; margin: 0;">{{team.name}}</h3>
+              <p style="color: #999; font-size: 12px; margin: 4px 0 0 0;">ID: {{team.id}}</p>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: #1976d2; flex-shrink: 0;">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Teams State -->
+    <ng-template #noTeams>
+      <div style="text-align: center; padding: 60px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">👥</div>
+        <h3 style="color: #333; font-weight: 600; font-size: 18px; margin: 0 0 8px 0;">No Teams Found</h3>
+        <p style="color: #666; font-size: 14px; margin: 0; line-height: 1.6;">
+          You haven't created any teams yet.<br>
+          Click "Add Team" to create your first team!
+        </p>
+      </div>
+    </ng-template>
+  </div>
+</ion-content>

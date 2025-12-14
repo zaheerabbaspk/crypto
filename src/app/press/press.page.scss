@@ -1,0 +1,314 @@
+/* Page Header */
+.page-header {
+  --background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.page-title {
+  color: white;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* Page Content */
+.page-content {
+  --background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.page-wrapper {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Hero Section */
+.hero-section {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 24px;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.hero-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.hero-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 24px;
+  margin: 0 0 8px 0;
+}
+
+.hero-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Messages Card */
+.messages-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 24px;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
+}
+
+.card-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.card-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Message Item */
+.message-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  border-left: 4px solid #ff9800;
+  background: #fff8f0;
+}
+
+.message-item.warning {
+  border-left-color: #ff9800;
+  background: #fff8f0;
+}
+
+.message-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.message-text {
+  flex: 1;
+}
+
+.message-title {
+  color: #1a202c;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 4px 0;
+}
+
+.message-desc {
+  color: #ff9800;
+  font-size: 12px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Instruction Card */
+.instruction-card {
+  background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 4px solid #2e7d32;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(46, 125, 50, 0.1);
+}
+
+.instruction-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.instruction-title {
+  color: #1a202c;
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.instruction-text {
+  color: #2e7d32;
+  font-size: 13px;
+  margin: 0;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.action-btn {
+  padding: 14px 16px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 600;
+  font-size: 13px;
+  height: 48px;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  transition: background 0.3s ease;
+  pointer-events: none;
+}
+
+.next-btn {
+  background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.25);
+}
+
+.next-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(46, 125, 50, 0.35);
+}
+
+.next-btn:hover::before {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.exit-btn {
+  background: white;
+  color: #c62828;
+  border: 1.5px solid #ffcdd2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.exit-btn:hover {
+  border-color: #c62828;
+  box-shadow: 0 4px 12px rgba(198, 40, 40, 0.15);
+  transform: translateY(-2px);
+}
+
+.exit-btn:hover::before {
+  background: rgba(198, 40, 40, 0.05);
+}
+
+.btn-icon {
+  width: 18px;
+  height: 18px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 16px 12px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-wrapper {
+    padding: 12px;
+  }
+
+  .hero-section {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .hero-icon {
+    font-size: 40px;
+  }
+
+  .hero-title {
+    font-size: 18px;
+  }
+
+  .hero-subtitle {
+    font-size: 12px;
+  }
+
+  .messages-card {
+    margin-bottom: 16px;
+  }
+
+  .card-content {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .message-item {
+    padding: 12px;
+  }
+
+  .message-title {
+    font-size: 13px;
+  }
+
+  .message-desc {
+    font-size: 11px;
+  }
+
+  .instruction-card {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .instruction-title {
+    font-size: 13px;
+  }
+
+  .instruction-text {
+    font-size: 12px;
+  }
+
+  .action-buttons {
+    gap: 10px;
+  }
+
+  .action-btn {
+    padding: 12px 14px;
+    height: 44px;
+    font-size: 12px;
+  }
+}

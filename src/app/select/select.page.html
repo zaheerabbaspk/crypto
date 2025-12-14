@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background: linear-gradient(135deg, #1a237e 0%, #283593 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <ion-title style="color: white; font-weight: 700; font-size: 20px; letter-spacing: 0.5px;">Team Selection</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="--background: #f8f9fa;">
+  <div style="padding: 16px;">
+    
+    <!-- Info Section -->
+    <div style="background: white; border-radius: 12px; padding: 16px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #1976d2;">
+      <h3 style="color: #1976d2; font-weight: 600; font-size: 15px; margin: 0 0 8px 0;">Select Teams</h3>
+      <p style="color: #666; font-size: 13px; margin: 0; line-height: 1.5;">
+        Choose two teams to create a match. Tap on a team name to select or change it.
+      </p>
+    </div>
+
+    <!-- Team Selection Section -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">Team 1</h3>
+      
+      <!-- First Team Card -->
+      <div style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #1976d2; cursor: pointer; transition: all 0.3s ease;" (click)="goto(1)" [style.box-shadow]="'0 4px 12px rgba(25, 118, 210, 0.2)'">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 70px; height: 70px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img [src]="selectedTeam1Logo" style="width: 60px; height: 60px; object-fit: contain;" />
+          </div>
+          <div style="flex: 1;">
+            <p style="color: #666; font-size: 12px; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.5px;">Selected Team</p>
+            <h2 style="color: #1976d2; font-weight: 700; font-size: 18px; margin: 0;">{{selectedTeam1}}</h2>
+            <p style="color: #999; font-size: 12px; margin: 4px 0 0 0;">Tap to change</p>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: #1976d2; flex-shrink: 0;">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS Section -->
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
+      <div style="flex: 1; height: 1px; background: #e0e0e0;"></div>
+      <p style="color: #999; font-weight: 600; font-size: 14px; margin: 0; text-transform: uppercase;">VS</p>
+      <div style="flex: 1; height: 1px; background: #e0e0e0;"></div>
+    </div>
+
+    <!-- Team Selection Section -->
+    <div style="margin-bottom: 24px;">
+      <h3 style="font-size: 14px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0; padding: 0 4px;">Team 2</h3>
+      
+      <!-- Second Team Card -->
+      <div style="background: white; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid #4caf50; cursor: pointer; transition: all 0.3s ease;" (click)="goto(2)" [style.box-shadow]="'0 4px 12px rgba(76, 175, 80, 0.2)'">
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <div style="width: 70px; height: 70px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <img [src]="selectedTeam2Logo" style="width: 60px; height: 60px; object-fit: contain;" />
+          </div>
+          <div style="flex: 1;">
+            <p style="color: #666; font-size: 12px; margin: 0 0 4px 0; text-transform: uppercase; letter-spacing: 0.5px;">Selected Team</p>
+            <h2 style="color: #4caf50; font-weight: 700; font-size: 18px; margin: 0;">{{selectedTeam2}}</h2>
+            <p style="color: #999; font-size: 12px; margin: 4px 0 0 0;">Tap to change</p>
+          </div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; color: #4caf50; flex-shrink: 0;">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+      <ion-button expand="block" mode="ios" class="primary-btn" (click)="goToVenue()">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+        Next
+      </ion-button>
+      <ion-button expand="block" mode="ios" class="secondary-btn" routerLink="/twopage">
+        <svg slot="start" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 18px; height: 18px;">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

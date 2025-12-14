@@ -1,0 +1,164 @@
+/* Action Buttons */
+.action-btn {
+  --background: #f5f5f5;
+  --background-hover: #e8e8e8;
+  --background-activated: #d8d8d8;
+  --color: #333;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  transition: all 0.2s ease;
+}
+
+.players-btn {
+  --color: #0277bd;
+}
+
+.players-btn:hover {
+  --background: #e3f2fd;
+}
+
+.playing11-btn {
+  --color: #1976d2;
+}
+
+.playing11-btn:hover {
+  --background: #e3f2fd;
+}
+
+.edit-player-btn {
+  --color: #7b1fa2;
+}
+
+.edit-player-btn:hover {
+  --background: #f3e5f5;
+}
+
+.tournament-btn {
+  --color: #0277bd;
+}
+
+.tournament-btn:hover {
+  --background: #e3f2fd;
+}
+
+.friendly-btn {
+  --color: #7b1fa2;
+}
+
+.friendly-btn:hover {
+  --background: #f3e5f5;
+}
+
+.password-btn {
+  --color: #c62828;
+}
+
+.password-btn:hover {
+  --background: #ffebee;
+}
+
+.teamname-btn {
+  --color: #2e7d32;
+}
+
+.teamname-btn:hover {
+  --background: #e8f5e9;
+}
+
+.logo-btn {
+  --color: #e65100;
+}
+
+.logo-btn:hover {
+  --background: #fff3e0;
+}
+
+.location-btn {
+  --color: #1976d2;
+}
+
+.location-btn:hover {
+  --background: #e3f2fd;
+}
+
+/* Bottom Action Buttons */
+.back-btn {
+  --background: #f5f5f5;
+  --background-hover: #e0e0e0;
+  --background-activated: #d0d0d0;
+  --color: #333;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  transition: all 0.2s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.back-btn:hover {
+  --background: #d8d8d8;
+}
+
+.switch-btn {
+  --background: #1976d2;
+  --background-hover: #1565c0;
+  --background-activated: #0d47a1;
+  --color: white;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+}
+
+.switch-btn:hover {
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.logout-btn {
+  --background: #ffebee;
+  --background-hover: #ffcdd2;
+  --background-activated: #ef9a9a;
+  --color: #c62828;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 44px;
+  border: 1.5px solid #c62828;
+  transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+  --color: #ffffff;
+  --background: #ef9a9a;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .action-btn,
+  .back-btn,
+  .switch-btn,
+  .logout-btn {
+    height: 40px;
+    font-size: 12px;
+  }
+}

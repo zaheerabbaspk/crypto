@@ -1,0 +1,103 @@
+ion-content {
+  --background: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  color: #111;
+}
+
+.back-btn {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+
+  ion-button {
+    --background: #d9534f;   /* Red button */
+    --border-radius: 8px;
+    --color: #fff;
+    font-weight: 600;
+    padding: 0 25px;
+    text-transform: none;
+  }
+}
+
+/* Title */
+.page-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* Match Info */
+.match-info {
+  text-align: center;
+  font-size: 15px;
+  margin: 2px 0;
+
+  b {
+    font-weight: 600;
+  }
+
+  .vs-text {
+    color: red;
+    font-weight: bold;
+  }
+}
+
+/* Search Section */
+.search-section {
+  margin: 20px 15px;
+  text-align: center;
+
+  .search-label {
+    color: #800000;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  ion-input {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 14px;
+    --placeholder-color: #999;
+    margin-bottom: 10px;
+  }
+
+  .note-text {
+    font-size: 13px;
+    color: #444;
+    margin: 8px 0;
+  }
+
+  ion-button {
+    --background: #3498db;
+    --border-radius: 8px;
+    --color: #fff;
+    font-weight: 600;
+    text-transform: none;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 40px;
+  }
+}
+
+/* Instructions */
+.instructions {
+  margin: 15px;
+  text-align: center;
+
+  .title {
+    color: #800000;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  .desc {
+    color: #800000;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+}

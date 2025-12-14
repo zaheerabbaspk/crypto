@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>ICC Overlay</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="icc-bg">
+  <div class="broadcast-wrap">
+    <div class="broadcast-bar" role="group" aria-label="scoreboard">
+      <!-- Team tag -->
+      <div class="seg seg-team">
+        <span class="team-code">{{ match.leftTeam.short }}</span>
+      </div>
+
+      <!-- Score big -->
+      <div class="seg seg-score">{{ match.scoreLeft }}</div>
+
+      <!-- Over pill with red ball dot -->
+      <div class="seg seg-over">
+        <span class="ball-dot" aria-hidden="true"></span>
+        <span class="over">{{ match.over }}</span>
+      </div>
+
+      <!-- Target white pill -->
+      <div class="seg seg-target">
+        <span class="label">TARGET</span>
+        <span class="value">{{ match.target }}</span>
+      </div>
+
+      <!-- Batters -->
+      <div class="seg seg-batter">
+        <span class="name">{{ match.batters[0].name }}</span>
+        <span class="runs">{{ match.batters[0].runs }}</span>
+        <span class="balls">{{ match.batters[0].balls }}</span>
+      </div>
+      <div class="divider"></div>
+      <div class="seg seg-batter">
+        <span class="name">{{ match.batters[1].name }}</span>
+        <span class="runs">{{ match.batters[1].runs }}</span>
+        <span class="balls">{{ match.batters[1].balls }}</span>
+      </div>
+
+      <!-- Bowler and flag at far right -->
+      <div class="seg seg-bowler">
+        <span class="name">{{ match.bowler.name }}</span>
+        <span class="figures">{{ match.bowler.figures }}</span>
+      </div>
+      <div class="seg seg-flag">
+        <img [src]="match.bowler.flag" alt="flag" />
+      </div>
+    </div>
+  </div>
+</ion-content>

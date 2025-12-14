@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "554911060100",
+    "firebase_url": "https://figmacricket-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "figmacricket",
+    "storage_bucket": "figmacricket.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:554911060100:android:390e2c0e596969ba9172d1",
+        "android_client_info": {
+          "package_name": "com.zalovelt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "554911060100-5eo3n6b1m0udhneqfaeb5edgh6nujpd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjTlC_1Wg5AT-1kpUPXYps7AjXYWcxFf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "554911060100-5eo3n6b1m0udhneqfaeb5edgh6nujpd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="rg" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#dddddd"/>
+    </radialGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#rg)" stroke="#6a0f17" stroke-width="4"/>
+  <g fill="#6a0f17" font-family="Segoe UI, Arial, sans-serif" font-weight="900" text-anchor="middle">
+    <text x="60" y="70" font-size="40">KR</text>
+  </g>
+</svg>

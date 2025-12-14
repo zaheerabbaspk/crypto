@@ -1,0 +1,750 @@
+ <ion-content [fullscreen]="true" style="--background: #f5f5f5;">
+  
+  <!-- Team Header -->
+  <div style="background: linear-gradient(45deg, #ff9800, #ffc107); padding: 15px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; align-items: center;">
+      <div style="width: 40px; height: 40px; background: #4caf50; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+        <span style="color: white; font-weight: bold;">🏏</span>
+      </div>
+
+  <!-- Settings Modal -->
+  <ion-modal [isOpen]="isSettingsModalOpen" (didDismiss)="closeSettingsModal()">
+    <ng-template>
+      <div style="background:white; padding:20px; border-radius:10px; margin:20px;">
+        <h2 style="margin-top:0; color:#333;">Settings</h2>
+        <div style="display:flex; gap:10px; align-items:center; margin:10px 0;">
+          <label style="width:120px; font-weight:700; color:#333;">Total Overs</label>
+          <input type="number" [(ngModel)]="settingsOvers" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;"/>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; margin:10px 0;">
+          <label style="width:120px; font-weight:700; color:#333;">Per Bowler</label>
+          <input type="number" [(ngModel)]="settingsLimit" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;"/>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+          <button (click)="closeSettingsModal()" style="background:#9e9e9e; color:#fff; border:none; padding:10px 18px; border-radius:6px;">Cancel</button>
+          <button (click)="applySettingsModal()" style="background:#4CAF50; color:#fff; border:none; padding:10px 18px; border-radius:6px; font-weight:700;">Apply</button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Scorer Modal -->
+  <ion-modal [isOpen]="isScorerModalOpen" (didDismiss)="closeScorerModal()">
+    <ng-template>
+      <div style="background:white; padding:20px; border-radius:10px; margin:20px;">
+        <h2 style="margin-top:0; color:#333;">Change Scorer</h2>
+        <div style="display:flex; gap:10px; align-items:center; margin:10px 0;">
+          <label style="width:120px; font-weight:700; color:#333;">Name</label>
+          <input type="text" [(ngModel)]="scorerName" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;"/>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; margin:10px 0;">
+          <label style="width:120px; font-weight:700; color:#333;">Phone</label>
+          <input type="tel" [(ngModel)]="scorerPhone" style="flex:1; padding:8px; border:1px solid #ccc; border-radius:4px;"/>
+        </div>
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:16px;">
+          <button (click)="closeScorerModal()" style="background:#9e9e9e; color:#fff; border:none; padding:10px 18px; border-radius:6px;">Cancel</button>
+          <button (click)="applyScorerModal()" style="background:#4CAF50; color:#fff; border:none; padding:10px 18px; border-radius:6px; font-weight:700;">Save</button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+      <div>
+        <h2 style="color: white; font-size: 18px; font-weight: bold; margin: 0;">{{battingTeam}}</h2>
+        <p style="color: white; font-size: 14px; margin: 0;">({{teamScore}} / {{wickets}}) Overs({{currentOver}}.{{ballsInOver}}/{{totalOvers}})</p>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center;">
+      <span style="color: #d32f2f; font-size: 16px; font-weight: bold; margin-right: 10px;">VS</span>
+      <span style="color: white; font-size: 16px; font-weight: bold;">{{bowlingTeam}}</span>
+      <div style="width: 40px; height: 40px; background: #2196f3; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px;">
+        <span style="color: white; font-weight: bold;">🏏</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Run Rate and Target Info -->
+  <div style="background: #e0e0e0; padding: 10px; display: flex; justify-content: space-between; align-items: center;">
+    <span style="color: #333; font-weight: bold;">Run Rate : {{runRate}}</span>
+    <span *ngIf="isSecondInnings" style="color: #d32f2f; font-weight: bold;">Target: {{targetScore}} (Need {{targetScore - teamScore}} more)</span>
+    <span *ngIf="!isSecondInnings" style="color: #333; font-weight: bold;">Limit per Bowler : {{limitPerBowler}}</span>
+  </div>
+  <!-- Match Settings quick view -->
+  <div style="background:#fafafa; padding:6px 10px; border-bottom:1px solid #eee; text-align:center; font-size:12px; color:#555;">
+    Match Settings: Overs = <strong>{{totalOvers}}</strong> | Bowler limit = <strong>{{limitPerBowler}}</strong>
+  </div>
+
+  <!-- Player Selection Warning -->
+  <div *ngIf="!areAllPlayersSelected()" style="background: #ffebee; border: 2px solid #f44336; padding: 15px; margin: 10px; border-radius: 8px; text-align: center;">
+    <div style="color: #d32f2f; font-weight: bold; font-size: 16px; margin-bottom: 10px;">
+      ⚠️ Please Select All Players First!
+    </div>
+    <div style="color: #666; font-size: 14px;">
+      Required: Striker Batsman, Non-Striker Batsman & Current Bowler
+    </div>
+    <div style="color: #d32f2f; font-size: 12px; margin-top: 5px;">
+      Scoring is disabled until all players are selected
+    </div>
+  </div>
+
+  <!-- Batsmen Section -->
+  <div style="background: white; margin: 10px; border-radius: 10px; padding: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h3 style="color: #ff9800; font-size: 18px; font-weight: bold; margin: 0;"># Batsman</h3>
+      <div style="display: flex; gap: 20px;">
+        <span style="color: #4caf50; font-weight: bold;">R</span>
+        <span style="color: #2196f3; font-weight: bold;">B</span>
+        <span style="color: #ff9800; font-weight: bold;">4</span>
+        <span style="color: #9c27b0; font-weight: bold;">6</span>
+      </div>
+    </div>
+
+    <!-- Striker Batsman -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee;" 
+         [style.background]="onStrike === 'striker' ? '#e8f5e8' : 'transparent'">
+      <div style="display: flex; align-items: center;">
+        <span style="color: #333; font-weight: bold; margin-right: 10px;">1</span>
+        <div style="margin-right: 10px;">
+          <ion-icon name="pencil" style="color: #666; font-size: 16px;" (click)="editBatsman('striker')"></ion-icon>
+        </div>
+        <div style="width: 40px; height: 40px; background: #00bcd4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+          <span style="color: white; font-size: 12px;">👤</span>
+        </div>
+        <span style="color: #333; font-weight: bold;">{{strikerBatsman}}</span>
+      </div>
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{strikerRuns}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{strikerBalls}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{strikerFours}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{strikerSixes}}</span>
+      </div>
+    </div>
+
+    <!-- Non-Striker Batsman -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;"
+         [style.background]="onStrike === 'nonStriker' ? '#e8f5e8' : 'transparent'">
+      <div style="display: flex; align-items: center;">
+        <span style="color: #333; font-weight: bold; margin-right: 10px;">2</span>
+        <div style="margin-right: 10px;">
+          <ion-icon name="pencil" style="color: #666; font-size: 16px;" (click)="editBatsman('nonStriker')"></ion-icon>
+        </div>
+        <div style="width: 40px; height: 40px; background: #00bcd4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+          <span style="color: white; font-size: 12px;">👤</span>
+        </div>
+        <span style="color: #333; font-weight: bold;">{{nonStrikerBatsman}}</span>
+      </div>
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{nonStrikerRuns}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{nonStrikerBalls}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{nonStrikerFours}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{nonStrikerSixes}}</span>
+      </div>
+    </div>
+
+    <!-- Partnership Info -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 10px; background: #f5f5f5; border-radius: 8px;">
+      <div>
+        <span style="color: #333; font-weight: bold;">Partnership</span>
+        <div style="color: #666; font-size: 14px;">Run Rate</div>
+        <div style="color: #333; font-weight: bold;">{{partnershipRunRate}}</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="color: #666; font-size: 14px;">Runs</div>
+        <div style="color: #333; font-weight: bold;">{{partnershipRuns}}</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="color: #666; font-size: 14px;">Balls</div>
+        <div style="color: #333; font-weight: bold;">{{partnershipBalls}}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bowler Section -->
+  <div style="background: white; margin: 10px; border-radius: 10px; padding: 15px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+      <h3 style="color: #ff9800; font-size: 18px; font-weight: bold; margin: 0;"># Bowler</h3>
+      <div style="display: flex; gap: 20px;">
+        <span style="color: #4caf50; font-weight: bold;">O</span>
+        <span style="color: #2196f3; font-weight: bold;">R</span>
+        <span style="color: #ff9800; font-weight: bold;">M</span>
+        <span style="color: #9c27b0; font-weight: bold;">W</span>
+      </div>
+    </div>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0;">
+      <div style="display: flex; align-items: center;">
+        <span style="color: #333; font-weight: bold; margin-right: 10px;">1</span>
+        <div style="width: 40px; height: 40px; background: #00bcd4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 10px;">
+          <span style="color: white; font-size: 12px;">👤</span>
+        </div>
+        <div>
+          <div style="color: #333; font-weight: bold;">{{currentBowler}}</div>
+          <div style="color: #666; font-size: 12px;">{{bowlerType}}</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{bowlerOvers}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{bowlerRuns}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{bowlerMaidens}}</span>
+        <span style="color: #333; font-weight: bold; width: 20px; text-align: center;">{{bowlerWickets}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Control Buttons Section -->
+  <div style="background: white; margin: 10px; border-radius: 10px; padding: 15px;">
+    
+    <!-- Control and Scoring Buttons using ion-grid with fixed heights -->
+    <ion-grid style="padding: 0; height: auto;">
+      <!-- Top Row Controls -->
+      <ion-row style="margin-bottom: 8px;">
+        <ion-col size="3" style="padding: 2px;">
+          <div style="background: #4caf50; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; height: 50px; display: flex; flex-direction: column; justify-content: center;" (click)="switchStrikeButton()">
+            <div style="color: white; font-size: 12px; margin-bottom: 2px;">🏏</div>
+            <div style="color: white; font-size: 9px; font-weight: bold;">Switch Strike</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div style="background: #ff9800; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; height: 50px; display: flex; flex-direction: column; justify-content: center;" (click)="injuredBowler()">
+            <div style="color: white; font-size: 12px; margin-bottom: 2px;">🤕</div>
+            <div style="color: white; font-size: 9px; font-weight: bold;">Injured Bowler</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div style="background: #2196f3; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; height: 50px; display: flex; flex-direction: column; justify-content: center;" (click)="replaceBowler()">
+            <div style="color: white; font-size: 12px; margin-bottom: 2px;">🔄</div>
+            <div style="color: white; font-size: 9px; font-weight: bold;">Replace Bowler</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div style="background: #f44336; border-radius: 8px; padding: 8px; text-align: center; cursor: pointer; height: 50px; display: flex; flex-direction: column; justify-content: center;" (click)="replaceBatsman()">
+            <div style="color: white; font-size: 12px; margin-bottom: 2px;">🔄</div>
+            <div style="color: white; font-size: 9px; font-weight: bold;">Replace batsman</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- More Options Panel (placed above scoring buttons) -->
+      <div *ngIf="showMoreOptions" class="mo-panel">
+        <div class="mo-title">More Options</div>
+        <div class="more-options-row">
+          <button class="mo-btn mo-grey" (click)="morePenaltyFive()">5</button>
+          <button class="mo-btn mo-grey" (click)="morePenaltyFive()">Penalty</button>
+          <button class="mo-btn mo-outline" (click)="moreDroppedCatch()">Dropped Catch</button>
+          <button class="mo-btn mo-outline" (click)="moreSavedMissedRuns()">Saved/Missed Runs</button>
+          <button class="mo-btn mo-exit" (click)="moreOptionsExit()">Exit</button>
+        </div>
+      </div>
+
+      <!-- Main Scoring Buttons Row -->
+      <ion-row style="margin-bottom: 8px;">
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#9e9e9e'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(0)">
+            <div style="color: white; font-size: 24px; font-weight: bold;">•</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#607d8b'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(1)">
+            <div style="color: white; font-size: 24px; font-weight: bold;">1</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#607d8b'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(2)">
+            <div style="color: white; font-size: 24px; font-weight: bold;">2</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#f44336'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="wicket()">
+            <div style="color: white; font-size: 18px; font-weight: bold;">Wkt</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- Second Scoring Row -->
+      <ion-row style="margin-bottom: 8px;">
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#607d8b'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(3)">
+            <div style="color: white; font-size: 20px; font-weight: bold;">3</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#607d8b'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(4)">
+            <div style="color: white; font-size: 20px; font-weight: bold;">4</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled || !areAllPlayersSelected() ? '#cccccc' : '#607d8b'" 
+               [style.opacity]="scoringDisabled || !areAllPlayersSelected() ? '0.5' : '1'"
+               [style.cursor]="scoringDisabled || !areAllPlayersSelected() ? 'not-allowed' : 'pointer'"
+               style="border-radius: 8px; text-align: center; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="addRuns(6)">
+            <div style="color: white; font-size: 20px; font-weight: bold;">6</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled ? '#cccccc' : '#795548'" 
+               [style.opacity]="scoringDisabled ? '0.5' : '1'"
+               style="border-radius: 8px; text-align: center; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="moreOptions()">
+            <div style="color: white; font-size: 14px; font-weight: bold;">More OP</div>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <!-- Extras Row -->
+      <ion-row style="margin-bottom: 8px;">
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled ? '#cccccc' : '#ffc107'" 
+               [style.opacity]="scoringDisabled ? '0.5' : '1'"
+               style="border-radius: 8px; text-align: center; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="openLbModal()">
+            <div style="color: white; font-size: 16px; font-weight: bold;">Lb</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled ? '#cccccc' : '#ffc107'" 
+               [style.opacity]="scoringDisabled ? '0.5' : '1'"
+               style="border-radius: 8px; text-align: center; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="openByModal()">
+            <div style="color: white; font-size: 16px; font-weight: bold;">By</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled ? '#cccccc' : '#4caf50'" 
+               [style.opacity]="scoringDisabled ? '0.5' : '1'"
+               style="border-radius: 8px; text-align: center; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="openWideModal()">
+            <div style="color: white; font-size: 16px; font-weight: bold;">Wd</div>
+          </div>
+        </ion-col>
+        <ion-col size="3" style="padding: 2px;">
+          <div [style.background]="scoringDisabled ? '#cccccc' : '#4caf50'" 
+               [style.opacity]="scoringDisabled ? '0.5' : '1'"
+               style="border-radius: 8px; text-align: center; cursor: pointer; height: 55px; display: flex; align-items: center; justify-content: center;" 
+               (click)="openNbModal()">
+            <div style="color: white; font-size: 16px; font-weight: bold;">Nb</div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Action Buttons -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+      
+
+      <!-- Next Button (shown after over completion or wicket) -->
+      <div *ngIf="showNextButton" style="background: #4caf50; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer;" (click)="showPlayerSelection()">
+        <span style="color: white; font-size: 14px; font-weight: bold;">Next</span>
+      </div>
+
+      <!-- Close Innings Button (shown after over completion or all out) -->
+      <div *ngIf="showInningsCloseButton" style="background: #ff5722; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-left: 10px;" (click)="openInningsCloseModal()">
+        <span style="color: white; font-size: 12px; font-weight: bold;">Close</span>
+      </div>
+
+      <!-- Next Innings Button (shown after innings completion) -->
+      <div *ngIf="showNextInningsButton" class="next-innings-btn" (click)="startNextInnings()">
+        <span class="next-innings-text">Next Innings</span>
+      </div>
+
+    </div>
+    <!-- Compact 'This Over' row using ion-grid -->
+    <ion-grid style="margin-top:10px; padding: 0 6px;">
+      <ion-row class="ion-align-items-center">
+        <!-- Left column: Ball circles -->
+        <ion-col size="6">
+          <div style="display:flex; flex-direction:column; gap:5px;">
+            <!-- Show ball rows (5 balls per row) -->
+            <ng-container *ngFor="let row of getBallRows(); let rowIndex = index">
+              <div style="display: flex; gap: 5px; align-items: center;">
+                <ng-container *ngFor="let ball of row">
+                  <div style="display:flex; flex-direction:column; align-items:center; gap:2px;">
+                    <div [style.background]="ball.color" style="width:32px; height:32px; border:2px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:11px;">{{ball.display}}</div>
+                    <div *ngIf="ball.note" style="font-size:10px; font-weight:700; color:#333; line-height:10px;">{{ball.note}}</div>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        
+        <!-- Right column: This Over, Undo, Edit Score -->
+        <ion-col size="6">
+          <div style="display:flex; align-items:center; justify-content:flex-end; gap:10px;">
+            <!-- This Over (stacked inside a compact block) -->
+            <div style="display:flex; flex-direction:column; align-items:center; min-width:60px;">
+              <div style="color:#ff9800; font-weight:700; font-size:13px; line-height:14px;">This Over</div>
+              <div style="color:#000; font-weight:800; font-size:20px; line-height:20px;">{{getOverRuns()}}</div>
+            </div>
+            <!-- Undo -->
+            <div style="display:flex; flex-direction:column; align-items:center; cursor:pointer; min-width:40px;" (click)="undo()">
+              <ion-icon name="arrow-undo-circle" style="font-size:22px; color: yellow;"></ion-icon>
+              <div style="font-size:11px; font-weight:700; color:#333; margin-top:2px;">Undo</div>
+            </div>
+            <!-- Edit Score -->
+            <div style="display:flex; flex-direction:column; align-items:center; cursor:pointer; min-width:50px;" (click)="editScoreCard()">
+              <ion-icon name="create" style="font-size:22px; color:#2196f3;"></ion-icon>
+              <div style="font-size:11px; font-weight:700; color:#333; margin-top:2px;">Edit Score</div>
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div style="background: #d9d9d9; padding: 14px; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #cfcfcf;">
+    
+    <div style="text-align: center; cursor: pointer;" (click)="changeSquad()">
+      <img src="assets/icons/change-squad.svg" style="width:40px;height:40px;" alt="Change Squad"/>
+      <div style="color: #333; font-size: 12px; margin-top: 6px; font-weight:700;">Change Squad</div>
+    </div>
+
+    <div style="text-align: center; cursor: pointer;" (click)="changeWK()">
+      <img src="assets/icons/change-wk.svg" style="width:40px;height:40px;" alt="Change WK"/>
+      <div style="color: #333; font-size: 12px; margin-top: 6px; font-weight:700;">Change WK</div>
+    </div>
+
+    <div style="text-align: center; cursor: pointer;" (click)="changeScorer()">
+      <img src="assets/icons/change-scorer.svg" style="width:40px;height:40px;" alt="Change Scorer"/>
+      <div style="color: #333; font-size: 12px; margin-top: 6px; font-weight:700;">Change Scorer</div>
+    </div>
+
+    <div style="text-align: center; cursor: pointer;" (click)="viewScoreCard()">
+      <img src="assets/icons/view-scorecard.svg" style="width:40px;height:40px;" alt="View ScoreCard"/>
+      <div style="color: #333; font-size: 12px; margin-top: 6px; font-weight:700;">View ScoreCard</div>
+    </div>
+
+    <div style="text-align: center; cursor: pointer;" (click)="settings()">
+      <img src="assets/icons/settings.svg" style="width:40px;height:40px;" alt="Settings"/>
+      <div style="color: #333; font-size: 12px; margin-top: 6px; font-weight:700;">Settings</div>
+    </div>
+  </div>
+
+  <!-- Footer Info -->
+  <div style="background: #f5f5f5; padding: 15px; text-align: center;">
+    <div style="color: #ff9800; font-size: 14px; font-weight: bold;">For Support call : (204) 226-1061</div>
+    <div style="color: #ff9800; font-size: 14px; font-weight: bold;">Email : zaheer.itech@gmail.com</div>
+    <div style="color: #666; font-size: 12px; margin-top: 5px;">Programmed by : zaheer abbas © 2023 Version V.9.2</div>
+  </div>
+
+  <!-- Player Selection Modal -->
+  <ion-modal [isOpen]="isPlayerModalOpen" (didDismiss)="closePlayerModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar style="--background: #f5f5f5;">
+          <ion-title style="color: #333; font-weight: bold;">{{playerModalTitle}}</ion-title>
+          <ion-button slot="end" fill="clear" (click)="closePlayerModal()">
+            <ion-icon name="close" style="color: #666;"></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content style="--background: #f5f5f5;">
+        <ion-list>
+          <ion-item *ngFor="let player of availablePlayersForSelection" button (click)="selectPlayerFromModal(player)" style="--background: white; margin: 5px 0; border-radius: 8px;">
+            <ion-label>
+              <h2 style="color: #333; font-weight: bold;">{{player.name}}</h2>
+              <p style="color: #666;">Player</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Wide Extra Select Modal (0-7 keypad) -->
+  <ion-modal [isOpen]="isWideSelectModalOpen" (didDismiss)="closeWideSelectModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeWideSelectModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+
+        <!-- Keypad grid 0..7 -->
+        <div style="padding:6px 10px;">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+            <button *ngFor="let n of [0,1,2,3,4,5,6,7]" (click)="selectWideExtra(n)" 
+                    style="background:#757575; color:#fff; border:none; border-radius:4px; height:48px; font-weight:800; font-size:16px;">
+              {{n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Innings Close Modal -->
+  <ion-modal [isOpen]="isInningsCloseModalOpen" (didDismiss)="closeInningsCloseModal()">
+    <ng-template>
+      <div style="background: white; padding: 30px; text-align: center; border-radius: 10px; margin: 20px;">
+        <h2 style="color: #ff9800; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Inning Close</h2>
+        <p style="color: #333; font-size: 18px; margin-bottom: 30px;">Do you want to close innings !</p>
+        
+        <div style="display: flex; gap: 0;">
+          <button (click)="confirmInningsClose()" style="background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; flex: 1; cursor: pointer;">
+            Yes
+          </button>
+          <button (click)="deleteLastEntry()" style="background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; flex: 1; cursor: pointer;">
+            Delete Last Entry
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Innings Close Confirmation Modal -->
+  <ion-modal [isOpen]="isInningsConfirmModalOpen" (didDismiss)="closeInningsConfirmModal()">
+    <ng-template>
+      <div style="background: white; padding: 30px; text-align: center; border-radius: 10px; margin: 20px;">
+        <h2 style="color: #ff9800; font-size: 24px; font-weight: bold; margin-bottom: 20px;">Inning close Confirmation</h2>
+        <p style="color: #333; font-size: 16px; margin-bottom: 30px;">Are you sure? you want to close this innings (if selected yes, you will not be able to score this innings anymore)</p>
+        
+        <div style="display: flex; gap: 0;">
+          <button (click)="finalizeInningsClose()" style="background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; flex: 1; cursor: pointer;">
+            Close Innings
+          </button>
+          <button (click)="cancelInningsClose()" style="background: #4caf50; color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: bold; flex: 1; cursor: pointer;">
+            No
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- Wide Modal -->
+  <ion-modal [isOpen]="isWideModalOpen" (didDismiss)="closeWideModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeWideModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+        <div style="text-align:center; color:#000; font-size:13px; font-weight:700; margin-top:-6px;">
+          Tap/click on Number Button
+          <div>to change Runs</div>
+        </div>
+
+        <!-- Body card -->
+        <div style="background:#ffffff; margin:14px 12px; padding:18px; border-radius:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="color:#333; font-weight:700; font-size:16px;">Wide 1 +</div>
+            <!-- Extra selector column -->
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; flex-direction:column; align-items:center;">
+                <button (click)="openWideSelectModal()" style="background:#757575; color:#fff; border:none; border-radius:4px; width:42px; height:36px; font-weight:800; font-size:16px;">{{wideExtraRuns}}</button>
+                <div style="color:#333; font-weight:700; font-size:12px; margin-top:6px;">Extra<br>Runs</div>
+              </div>
+              <div style="color:#333; font-weight:700; font-size:16px;">= {{1 + wideExtraRuns}}</div>
+              <div style="color:#333; font-weight:700; font-size:16px; white-space:nowrap;">Total Wide Runs</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; margin-top:18px;">
+            <button (click)="applyWide()" style="background:#FFA000; color:#000; border:none; padding:10px 28px; border-radius:6px; font-weight:800; min-width:120px;">Enter</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- LB Modal -->
+  <ion-modal [isOpen]="isLbModalOpen" (didDismiss)="closeLbModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeLbModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+        <div style="text-align:center; color:#000; font-size:13px; font-weight:700; margin-top:-6px;">
+          Tap/click on Number Button
+          <div>to change Runs</div>
+        </div>
+
+        <!-- Body card -->
+        <div style="background:#ffffff; margin:14px 12px; padding:18px; border-radius:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="color:#333; font-weight:700; font-size:16px;">Leg Bye +</div>
+            <!-- Extra selector column -->
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; flex-direction:column; align-items:center;">
+                <button (click)="openLbSelectModal()" style="background:#757575; color:#fff; border:none; border-radius:4px; width:42px; height:36px; font-weight:800; font-size:16px;">{{lbExtraRuns}}</button>
+                <div style="color:#333; font-weight:700; font-size:12px; margin-top:6px;">Extra<br>Runs</div>
+              </div>
+              <div style="color:#333; font-weight:700; font-size:16px;">= {{lbExtraRuns}}</div>
+              <div style="color:#333; font-weight:700; font-size:16px; white-space:nowrap;">Total Leg Bye Runs</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; margin-top:18px;">
+            <button (click)="applyLb()" style="background:#FFA000; color:#000; border:none; padding:10px 28px; border-radius:6px; font-weight:800; min-width:120px;">Enter</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- LB Extra Select Modal (0-7 keypad) -->
+  <ion-modal [isOpen]="isLbSelectModalOpen" (didDismiss)="closeLbSelectModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeLbSelectModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+
+        <!-- Keypad grid 0..7 -->
+        <div style="padding:6px 10px;">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+            <button *ngFor="let n of [0,1,2,3,4,5,6,7]" (click)="selectLbExtra(n)" 
+                    style="background:#757575; color:#fff; border:none; border-radius:4px; height:48px; font-weight:800; font-size:16px;">
+              {{n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- BY Modal -->
+  <ion-modal [isOpen]="isByModalOpen" (didDismiss)="closeByModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeByModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+        <div style="text-align:center; color:#000; font-size:13px; font-weight:700; margin-top:-6px;">
+          Tap/click on Number Button
+          <div>to change Runs</div>
+        </div>
+
+        <!-- Body card -->
+        <div style="background:#ffffff; margin:14px 12px; padding:18px; border-radius:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="color:#333; font-weight:700; font-size:16px;">Bye +</div>
+            <!-- Extra selector column -->
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; flex-direction:column; align-items:center;">
+                <button (click)="openBySelectModal()" style="background:#757575; color:#fff; border:none; border-radius:4px; width:42px; height:36px; font-weight:800; font-size:16px;">{{byExtraRuns}}</button>
+                <div style="color:#333; font-weight:700; font-size:12px; margin-top:6px;">Extra<br>Runs</div>
+              </div>
+              <div style="color:#333; font-weight:700; font-size:16px;">= {{byExtraRuns}}</div>
+              <div style="color:#333; font-weight:700; font-size:16px; white-space:nowrap;">Total Bye Runs</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; margin-top:18px;">
+            <button (click)="applyBy()" style="background:#FFA000; color:#000; border:none; padding:10px 28px; border-radius:6px; font-weight:800; min-width:120px;">Enter</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- BY Extra Select Modal (0-7 keypad) -->
+  <ion-modal [isOpen]="isBySelectModalOpen" (didDismiss)="closeBySelectModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeBySelectModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+
+        <!-- Keypad grid 0..7 -->
+        <div style="padding:6px 10px;">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+            <button *ngFor="let n of [0,1,2,3,4,5,6,7]" (click)="selectByExtra(n)" 
+                    style="background:#757575; color:#fff; border:none; border-radius:4px; height:48px; font-weight:800; font-size:16px;">
+              {{n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- NB Modal -->
+  <ion-modal [isOpen]="isNbModalOpen" (didDismiss)="closeNbModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeNbModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+        <div style="text-align:center; color:#000; font-size:13px; font-weight:700; margin-top:-6px;">
+          Tap/click on Number Button
+          <div>to change Runs</div>
+        </div>
+
+        <!-- Body card -->
+        <div style="background:#ffffff; margin:14px 12px; padding:18px; border-radius:10px;">
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="color:#333; font-weight:700; font-size:16px;">No Ball 1 +</div>
+            <!-- Extra selector column -->
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="display:flex; flex-direction:column; align-items:center;">
+                <button (click)="openNbSelectModal()" style="background:#757575; color:#fff; border:none; border-radius:4px; width:42px; height:36px; font-weight:800; font-size:16px;">{{nbExtraRuns}}</button>
+                <div style="color:#333; font-weight:700; font-size:12px; margin-top:6px;">Extra<br>Runs</div>
+              </div>
+              <div style="color:#333; font-weight:700; font-size:16px;">= {{1 + nbExtraRuns}}</div>
+              <div style="color:#333; font-weight:700; font-size:16px; white-space:nowrap;">Total No Ball Runs</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center; margin-top:18px;">
+            <button (click)="applyNb()" style="background:#FFA000; color:#000; border:none; padding:10px 28px; border-radius:6px; font-weight:800; min-width:120px;">Enter</button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- NB Extra Select Modal (0-7 keypad) -->
+  <ion-modal [isOpen]="isNbSelectModalOpen" (didDismiss)="closeNbSelectModal()">
+    <ng-template>
+      <div style="background:#f5f5f5; min-height:100%; display:flex; flex-direction:column;">
+        <!-- Top Back button -->
+        <div style="padding:16px; display:flex; justify-content:center;">
+          <button (click)="closeNbSelectModal()" style="background:#4CAF50; color:#fff; border:none; border-radius:6px; padding:10px 24px; font-weight:700; min-width:110px;">Back</button>
+        </div>
+
+        <!-- Keypad grid 0..7 -->
+        <div style="padding:6px 10px;">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px;">
+            <button *ngFor="let n of [0,1,2,3,4,5,6,7]" (click)="selectNbExtra(n)" 
+                    style="background:#757575; color:#fff; border:none; border-radius:4px; height:48px; font-weight:800; font-size:16px;">
+              {{n}}
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

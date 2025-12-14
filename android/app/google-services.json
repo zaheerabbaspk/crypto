@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "523380004270",
+    "project_id": "figmacricket-dc90f",
+    "storage_bucket": "figmacricket-dc90f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523380004270:android:7ceab97c3beb65f58d243f",
+        "android_client_info": {
+          "package_name": "com.figmacricket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD37eegCSH4GaBZHG33SGK_gaCj-Qfl6fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

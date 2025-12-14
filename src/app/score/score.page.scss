@@ -1,0 +1,157 @@
+/* Back Button */
+.back-btn {
+  --background: #f5f5f5;
+  --background-hover: #e0e0e0;
+  --background-activated: #d0d0d0;
+  --color: #333;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+/* Action Cards */
+.action-card {
+  --border-radius: 10px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: none;
+  letter-spacing: 0.3px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 90px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.tournament-action {
+  --background: #e8f4f8;
+  --background-hover: #b3e5fc;
+  --background-activated: #81d4fa;
+  --color: #0277bd;
+}
+
+.tournament-action:hover {
+  box-shadow: 0 4px 12px rgba(2, 119, 189, 0.15);
+}
+
+.friendly-action {
+  --background: #f3e5f5;
+  --background-hover: #e1bee7;
+  --background-activated: #ce93d8;
+  --color: #7b1fa2;
+}
+
+.friendly-action:hover {
+  box-shadow: 0 4px 12px rgba(123, 31, 162, 0.15);
+}
+
+/* Utility Buttons */
+.utility-btn {
+  --background: #f5f5f5;
+  --background-hover: #e8e8e8;
+  --background-activated: #d8d8d8;
+  --color: #666;
+  --border-radius: 8px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-weight: 500;
+  font-size: 12px;
+  height: 36px;
+  transition: all 0.2s ease;
+}
+
+.utility-btn:hover {
+  --color: #333;
+}
+
+/* Primary Action Button */
+.primary-btn {
+  --background: #1976d2;
+  --background-hover: #1565c0;
+  --background-activated: #0d47a1;
+  --color: white;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  height: 44px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+}
+
+.primary-btn:hover {
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+/* Secondary Action Button */
+.secondary-btn {
+  --background: #f5f5f5;
+  --background-hover: #e0e0e0;
+  --background-activated: #d0d0d0;
+  --color: #333;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  height: 44px;
+  transition: all 0.3s ease;
+  border: 1px solid #e0e0e0;
+}
+
+.secondary-btn:hover {
+  --background: #d8d8d8;
+}
+
+/* Man of the Match Button */
+.motm-btn {
+  --background: rgba(255, 255, 255, 0.2);
+  --background-hover: rgba(255, 255, 255, 0.3);
+  --background-activated: rgba(255, 255, 255, 0.15);
+  --color: white;
+  --border-radius: 6px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+}
+
+.motm-btn:hover {
+  --background: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .action-card {
+    min-height: 80px;
+    font-size: 13px;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    height: 40px;
+    font-size: 13px;
+  }
+}
